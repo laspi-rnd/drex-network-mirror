@@ -16,14 +16,14 @@ before_script:
 
 setup_aliennet:
   stage: setup
-  image: docker:dind, hyperledger/besu:latest
+  image: docker:dind
   script:
     - cd aliennet
     - source scripts/setup_aliennet.sh
 
 setup_testnet:
   stage: setup
-  image: docker:dind, hyperledger/besu:latest
+  image: docker:dind
   script:
     - cd testnet
     - source scripts/setup_tesnet.sh
