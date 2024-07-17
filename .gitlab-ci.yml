@@ -1,0 +1,75 @@
+stages:
+  - setup
+  - build
+  - test
+  - deploy
+  - cleanup
+
+variables:
+  DOCKER_DRIVER: overlay2
+
+services:
+  - docker:dind
+
+before_script:
+  - export DOCKER_HOST=tcp://docker:2375
+
+setup_aliennet:
+  stage: setup
+  image: 
+    - docker:dind
+    - hyperledger/besu:latest
+  script:
+    - cd aliennet
+    - source scripts/setup_aliennet.sh
+
+setup_testnet:
+  stage: setup
+  image:
+    - docker:dind
+    - hyperledger/besu:latest
+  script:
+    - cd testnet
+    - source scripts/setup_tesnet.sh
+    - source scripts/setup_alienclients.sh
+
+build_testnet:
+  stage: build
+  image: node:20
+  script:
+    - cd testnet
+    - npm install
+
+build_aliennet:
+  stage: build
+  image: node:20
+  script:
+    - cd aliennet
+    - npm install
+    - npx hardhat compile
+
+test:
+  stage: test
+  image: node:20
+  script:
+    - echo "Testing"
+    #- cd testnet
+    #- npx hardhat test
+
+deploy:
+  stage: deploy
+  image: node:20
+  script:
+    - echo "Deploying"
+    #- npx hardhat ignition deploy ./ignition/modules/Lock.js --network localhost # TO DO: trocar localhost por subip da rede alien/test
+
+cleanup:
+  stage: cleanup
+  image: docker:dind
+  script:
+    - cd testnet 
+    - source scripts/cleanup.sh
+    - cd ../aliennet
+    - source scripts/cleanup.sh
+    
+  when: always

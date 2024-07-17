@@ -1,0 +1,41 @@
+version: '2.1'
+services:
+  alien-fullclient-node:
+    user: root
+    container_name: alien-fullclient-node
+    volumes:
+      - ../node/alien-0/data:/opt/besu/data
+      - ../genesis:/opt/besu/genesis
+    image: hyperledger/besu:latest
+    entrypoint:
+      - /bin/bash
+      - -c
+      - besu --genesis-file=genesis/genesis.json --rpc-http-enabled --sync-mode=FULL --bootnodes=enode://4a2c43174ee6e6c11b77cec4d9c6fa00583273656a49e276f9cd701b779a8ea7b98f162f78e18033b884924d5fe2ecfaba356ae4a7b513802fc8f5a54c5a937f@172.19.0.2:30303 --data-path=data
+    ports:
+      - "8551:8545"
+      - "30309:30303"
+    networks:
+      test_network:
+    restart: always
+
+  alien-lightclient-node:
+    user: root
+    container_name: alien-lightclient-node
+    volumes:
+      - ../node/alien-1/data:/opt/besu/data
+      - ../genesis:/opt/besu/genesis
+    image: hyperledger/besu:latest
+    entrypoint:
+      - /bin/bash
+      - -c
+      - besu --genesis-file=genesis/genesis.json --rpc-http-enabled --sync-mode=FAST --bootnodes=enode://4a2c43174ee6e6c11b77cec4d9c6fa00583273656a49e276f9cd701b779a8ea7b98f162f78e18033b884924d5fe2ecfaba356ae4a7b513802fc8f5a54c5a937f@172.19.0.2:30303 --data-path=data
+    ports:
+      - "8552:8545"
+      - "30310:30303"
+    networks:
+      test_network:
+    restart: always
+
+networks:
+  test_network:
+    external: true

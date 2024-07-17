@@ -1,0 +1,59 @@
+version: '2.1'
+services:
+  test-node-1:
+    user: root
+    container_name: test-node-1
+    volumes:
+      - ../node/besu-1/data:/opt/besu/data
+      - ../genesis:/opt/besu/genesis
+    image: hyperledger/besu:latest
+    entrypoint:
+      - /bin/bash
+      - -c
+      - besu --data-path=data --genesis-file=genesis/genesis.json --bootnodes=enode://a8762d4ebb3bb6954e958afb9fa540e1423fea73b8a7f90efd941d28cce84b0d02ee9fcabf7606272c13c9c0b1af43b724390b9aded50f959f717dee2daa8f61@172.20.0.2:30303 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all"
+    ports:
+      - "8546:8545"
+      - "30304:30303"
+    networks:
+      test_network:
+    restart: always
+
+  test-node-2:
+    user: root
+    container_name: test-node-2
+    volumes:
+      - ../node/besu-2/data:/opt/besu/data
+      - ../genesis:/opt/besu/genesis
+    image: hyperledger/besu:latest
+    entrypoint:
+      - /bin/bash
+      - -c
+      - besu --data-path=data --genesis-file=genesis/genesis.json --bootnodes=enode://a8762d4ebb3bb6954e958afb9fa540e1423fea73b8a7f90efd941d28cce84b0d02ee9fcabf7606272c13c9c0b1af43b724390b9aded50f959f717dee2daa8f61@172.20.0.2:30303 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all"
+    ports:
+      - "8547:8545"
+      - "30305:30303"
+    networks:
+      test_network:
+    restart: always
+    
+  test-node-3:
+    user: root
+    container_name: test-node-3
+    volumes:
+      - ../node/besu-3/data:/opt/besu/data
+      - ../genesis:/opt/besu/genesis
+    image: hyperledger/besu:latest
+    entrypoint:
+      - /bin/bash
+      - -c
+      - besu --data-path=data --genesis-file=genesis/genesis.json --bootnodes=enode://a8762d4ebb3bb6954e958afb9fa540e1423fea73b8a7f90efd941d28cce84b0d02ee9fcabf7606272c13c9c0b1af43b724390b9aded50f959f717dee2daa8f61@172.20.0.2:30303 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all"
+    ports:
+      - "8548:8545"
+      - "30306:30303"
+    networks:
+      test_network:
+    restart: always
+
+networks:
+  test_network:
+    external: true

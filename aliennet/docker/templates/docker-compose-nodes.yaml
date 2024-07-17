@@ -1,0 +1,23 @@
+version: '2.1'
+services:
+  alien-node-1:
+    user: root
+    container_name: alien-node-1
+    volumes:
+      - ../node/besu-1/data:/opt/besu/data
+      - ../genesis:/opt/besu/genesis
+    image: hyperledger/besu:latest
+    entrypoint:
+      - /bin/bash
+      - -c
+      - besu --data-path=data --genesis-file=genesis/genesis.json --bootnodes=<ENODE> --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all"
+    ports:
+      - "8550:8545"
+      - "30308:30303"
+    networks:
+      alien_network:
+    restart: always
+
+networks:
+  alien_network:
+    external: true

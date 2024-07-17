@@ -1,0 +1,41 @@
+version: '2.1'
+services:
+  alien-fullclient-node:
+    user: root
+    container_name: alien-fullclient-node
+    volumes:
+      - ../node/alien-0/data:/opt/besu/data
+      - ../genesis:/opt/besu/genesis
+    image: hyperledger/besu:latest
+    entrypoint:
+      - /bin/bash
+      - -c
+      - besu --genesis-file=genesis/genesis.json --rpc-http-enabled --sync-mode=FULL --bootnodes=<ENODE> --data-path=database
+    ports:
+      - "8551:8545"
+      - "30309:30303"
+    networks:
+      test_network:
+    restart: always
+
+  alien-lightclient-node:
+    user: root
+    container_name: alien-lightclient-node
+    volumes:
+      - ../node/alien-1/data:/opt/besu/data
+      - ../genesis:/opt/besu/genesis
+    image: hyperledger/besu:latest
+    entrypoint:
+      - /bin/bash
+      - -c
+      - besu --genesis-file=genesis/genesis.json --rpc-http-enabled --sync-mode=FAST --bootnodes=<ENODE> --data-path=database
+    ports:
+      - "8552:8545"
+      - "30310:30303"
+    networks:
+      test_network:
+    restart: always
+
+networks:
+  test_network:
+    external: true
