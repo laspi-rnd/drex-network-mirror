@@ -5,25 +5,16 @@ stages:
   - deploy
   - cleanup
 
-variables:
-  DOCKER_DRIVER: overlay2
-
-services:
-  - docker:dind
-
-before_script:
-  - export DOCKER_HOST=tcp://docker:2375
-
 setup_aliennet:
   stage: setup
-  image: docker:dind
+  image: docker:latest
   script:
     - cd aliennet
     - source scripts/setup_aliennet.sh
 
 setup_testnet:
   stage: setup
-  image: docker:dind
+  image: docker:latest
   script:
     - cd testnet
     - source scripts/setup_tesnet.sh
@@ -61,11 +52,10 @@ deploy:
 
 cleanup:
   stage: cleanup
-  image: docker:dind
+  image: docker:latest
   script:
     - cd testnet 
     - source scripts/cleanup.sh
     - cd ../aliennet
     - source scripts/cleanup.sh
-    
   when: always
