@@ -4,7 +4,7 @@ mkdir -p node/besu-0/data
 mkdir -p node/besu-1/data
 
 mkdir _tmp && cd _tmp
-besu operator generate-blockchain-config --config-file=../config/qbftConfigFile.json --to=networkFiles --private-key-file-name=key
+docker run hyperledger/besu:latest operator generate-blockchain-config --config-file=../config/qbftConfigFile.json --to=networkFiles --private-key-file-name=key
 
 cd ..   
 

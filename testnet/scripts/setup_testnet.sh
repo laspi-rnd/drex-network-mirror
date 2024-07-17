@@ -9,7 +9,7 @@ mkdir -p node/alien-0
 mkdir -p node/alien-1
 
 mkdir _tmp && cd _tmp
-besu operator generate-blockchain-config --config-file=../config/qbftConfigFile.json --to=networkFiles --private-key-file-name=key
+docker run hyperledger/besu:latest operator generate-blockchain-config --config-file=../config/qbftConfigFile.json --to=networkFiles --private-key-file-name=key
 
 cd ..   
 
