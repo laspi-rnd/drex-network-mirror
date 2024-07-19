@@ -10,11 +10,11 @@ services:
     entrypoint:
       - /bin/bash
       - -c
-      - besu --data-path=data --genesis-file=genesis/genesis.json --min-gas-price=0 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all" --metrics-enabled --metrics-host=alien-node-0
+      - besu --data-path=data  --rpc-http-port=8549 --p2p-port=30307 --genesis-file=genesis/genesis.json --min-gas-price=0 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all" --metrics-enabled --metrics-host=alien-node-0
     ports:
-      - "8549:8545"
-      - "30307:30303"
-      - "9546:9545"
+      - "8549:8549"
+      - "30307:30307"
+      - "9546:9546"
     networks:
       alien_network:
     restart: always

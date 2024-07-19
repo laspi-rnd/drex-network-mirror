@@ -2,9 +2,11 @@
 
 mkdir -p node/besu-0/data
 mkdir -p node/besu-1/data
+mkdir -p node/alien-0/data
+mkdir -p node/alien-1/data
 
 mkdir _tmp && cd _tmp
-docker run hyperledger/besu:latest operator generate-blockchain-config --config-file=../config/qbftConfigFile.json --to=networkFiles --private-key-file-name=key
+besu operator generate-blockchain-config --config-file=../config/qbftConfigFile.json --to=networkFiles --private-key-file-name=key
 
 cd ..   
 
@@ -20,12 +22,12 @@ mkdir genesis && cp _tmp/networkFiles/genesis.json genesis/genesis.json
 
 rm -rf _tmp
 
-if ! docker network ls | grep -q alien_network; then
-  docker network create alien_network
+if ! sudo docker network ls | grep -q alien_network; then
+  sudo docker network create alien_network
 fi
 
 echo "Starting bootnode"
-docker-compose -f docker/docker-compose-bootnode.yaml up -d
+sudo docker compose -f docker/docker-compose-bootnode.yaml up -d
 
 max_retries=30  # Maximum number of retries
 retry_delay=1  # Delay in seconds between retries
@@ -54,10 +56,20 @@ fi
 echo "ENODE: $ENODE"
 
 export E_ADDRESS="${ENODE#enode://}"
-export DOCKER_NODE_1_ADDRESS=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' alien-node-0)
+export DOCKER_NODE_1_ADDRESS=$(sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' alien-node-0)
 export E_ADDRESS=$(echo $E_ADDRESS | sed -e "s/127.0.0.1/$DOCKER_NODE_1_ADDRESS/g")
 echo $E_ADDRESS
 
+echo "Changing ENODE in docker-compose files"
 sed "s/<ENODE>/enode:\/\/$E_ADDRESS/g" docker/templates/docker-compose-nodes.yaml > docker/docker-compose-nodes.yaml
+sed "s/<ENODE>/enode:\/\/$E_ADDRESS/g" docker/templates/docker-compose-clientnodes.yaml > docker/docker-compose-clientnodes.yaml
+
+if ! sudo docker network ls | grep -q clients_network; then
+  sudo docker network create clients_network
+fi
+
 echo "Starting nodes"
-docker-compose -f docker/docker-compose-nodes.yaml up -d
+sudo docker compose -f docker/docker-compose-nodes.yaml up -d
+
+echo "Starting client nodes"
+sudo docker compose -f docker/docker-compose-clientnodes.yaml up -d

@@ -10,10 +10,10 @@ services:
     entrypoint:
       - /bin/bash
       - -c
-      - besu --data-path=data --genesis-file=genesis/genesis.json --bootnodes=enode://4a2c43174ee6e6c11b77cec4d9c6fa00583273656a49e276f9cd701b779a8ea7b98f162f78e18033b884924d5fe2ecfaba356ae4a7b513802fc8f5a54c5a937f@172.19.0.2:30303 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all"
+      - besu --data-path=data  --rpc-http-port=8550 --p2p-port=30308 --genesis-file=genesis/genesis.json --bootnodes=enode://c04074c099023be03a9860b4f238e577667e9b91d269afecca249ac4a2b788a23e424599737e0538166011b84bef2680dd5023d0457d27ca7e9bb3a091cf0b9a@172.19.0.2:30307 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all"
     ports:
-      - "8550:8545"
-      - "30308:30303"
+      - "8550:8550"
+      - "30308:30308"
     networks:
       alien_network:
     restart: always

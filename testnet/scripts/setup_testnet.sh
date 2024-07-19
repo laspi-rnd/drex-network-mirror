@@ -9,7 +9,7 @@ mkdir -p node/alien-0
 mkdir -p node/alien-1
 
 mkdir _tmp && cd _tmp
-docker run hyperledger/besu:latest operator generate-blockchain-config --config-file=../config/qbftConfigFile.json --to=networkFiles --private-key-file-name=key
+besu operator generate-blockchain-config --config-file=../config/qbftConfigFile.json --to=networkFiles --private-key-file-name=key
 
 cd ..   
 
@@ -25,12 +25,12 @@ mkdir genesis && cp _tmp/networkFiles/genesis.json genesis/genesis.json
 
 rm -rf _tmp
 
-if ! docker network ls | grep -q test_network; then
-  docker network create test_network
+if ! sudo docker network ls | grep -q test_network; then
+  sudo docker network create test_network
 fi
 
 echo "Starting bootnode"
-docker-compose -f docker/docker-compose-bootnode.yaml up -d
+sudo docker compose -f docker/docker-compose-bootnode.yaml up -d
 
 max_retries=30  # Maximum number of retries
 retry_delay=1  # Delay in seconds between retries
@@ -59,10 +59,10 @@ fi
 echo "ENODE: $ENODE"
 
 export E_ADDRESS="${ENODE#enode://}"
-export DOCKER_NODE_1_ADDRESS=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' test-node-0)
+export DOCKER_NODE_1_ADDRESS=$(sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' test-node-0)
 export E_ADDRESS=$(echo $E_ADDRESS | sed -e "s/127.0.0.1/$DOCKER_NODE_1_ADDRESS/g")
 echo $E_ADDRESS
 
 sed "s/<ENODE>/enode:\/\/$E_ADDRESS/g" docker/templates/docker-compose-nodes.yaml > docker/docker-compose-nodes.yaml
 echo "Starting nodes"
-docker-compose -f docker/docker-compose-nodes.yaml up -d
+sudo docker compose -f docker/docker-compose-nodes.yaml up -d
