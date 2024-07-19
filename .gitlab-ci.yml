@@ -22,7 +22,14 @@ setup_alien_nodes_configs:
     - mkdir _tmp && cd _tmp
     - besu operator generate-blockchain-config --config-file=../config/qbftConfigFile.json --to=networkFiles --private-key-file-name=key
 
-    - cd ..   
+    - cd ..
+  
+  artifacts:
+    paths:
+      - aliennet/node/alien-*/*
+      - aliennet/node/besu-*/*
+      - aliennet/_tmp/networkFiles
+      - aliennet/config/qbftConfigFile.json
 
 create_alien_nodes:
   stage: setup_alien
@@ -30,6 +37,12 @@ create_alien_nodes:
   script:
     - source scripts/setup_alien.sh
     - cd ..
+  artifacts:
+    paths:
+      - aliennet/docker/*
+      - aliennet/_tmp/networkFiles
+      - aliennet/node/alien-*/*
+      - aliennet/node/besu-*/*
 
 setup_main_nodes_configs:
   stage: setup_main
