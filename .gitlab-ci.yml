@@ -27,6 +27,7 @@ setup_alien_nodes_configs:
 create_alien_nodes:
   stage: setup_alien
   image: docker:latest
+  script:
     - source scripts/setup_alien.sh
     - cd ..
 
@@ -51,6 +52,7 @@ setup_main_nodes_configs:
 create_main_nodes:
   stage: setup_main
   image: docker:latest
+  script:
     - source scripts/setup_main.sh
     - cd ..
 
