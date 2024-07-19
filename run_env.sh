@@ -1,11 +1,11 @@
 #! /bin/bash
 
 cd aliennet
-source scripts/setup_aliennet.sh
+source scripts/setup_alien.sh
 cd ..
 
 cd testnet
-source scripts/setup_testnet.sh
+source scripts/setup_test.sh
 cd ..
 
 #sleep 10

@@ -1,54 +1,91 @@
 stages:
-  - setup
+  - setup_alien
+  - setup_main
   - build
   - test
   - deploy
   - cleanup
 
-setup_aliennet:
-  stage: setup
-  image: docker:latest
+setup_alien_nodes_configs:
+  stage: setup_alien
+  image: hyperledger/besu:24.5.2-amd64
   script:
     - cd aliennet
-    - source scripts/setup_aliennet.sh
 
-setup_testnet:
-  stage: setup
+    - echo "Creating nodes directories"
+    - mkdir -p node/besu-0/data
+    - mkdir -p node/besu-1/data
+    - mkdir -p node/alien-0/data
+    - mkdir -p node/alien-1/data
+
+    - echo "Generating keys & genesis files"
+    - mkdir _tmp && cd _tmp
+    - besu operator generate-blockchain-config --config-file=../config/qbftConfigFile.json --to=networkFiles --private-key-file-name=key
+
+    - cd ..   
+
+create_alien_nodes:
+  stage: setup_alien
   image: docker:latest
+    - source scripts/setup_alien.sh
+    - cd ..
+
+setup_main_nodes_configs:
+  stage: setup_main
+  image: hyperledger/besu:24.5.2-amd64
   script:
     - cd testnet
-    - source scripts/setup_tesnet.sh
-    - source scripts/setup_alienclients.sh
 
-build_testnet:
-  stage: build
-  image: node:20
-  script:
-    - cd testnet
-    - npm install
+    - echo "Creating nodes directories"
+    - mkdir -p node/besu-0/data
+    - mkdir -p node/besu-1/data
+    - mkdir -p node/besu-2/data
+    - mkdir -p node/besu-3/data
 
-build_aliennet:
-  stage: build
-  image: node:20
-  script:
-    - cd aliennet
-    - npm install
-    - npx hardhat compile
+    - echo "Generating keys & genesis files"
+    - mkdir _tmp && cd _tmp
+    - besu operator generate-blockchain-config --config-file=../config/qbftConfigFile.json --to=networkFiles --private-key-file-name=key
 
-test:
-  stage: test
-  image: node:20
-  script:
-    - echo "Testing"
-    #- cd testnet
-    #- npx hardhat test
+    - cd ..   
 
-deploy:
-  stage: deploy
-  image: node:20
-  script:
-    - echo "Deploying"
-    #- npx hardhat ignition deploy ./ignition/modules/Lock.js --network localhost # TO DO: trocar localhost por subip da rede alien/test
+create_main_nodes:
+  stage: setup_main
+  image: docker:latest
+    - source scripts/setup_main.sh
+    - cd ..
+
+
+#build_testnet:
+#  stage: build
+#  image: node:20
+#  script:
+#    - cd testnet
+#    - npm install
+#    - npx hardhat compile
+
+#build_aliennet:
+#  stage: build
+#  image: node:20
+#  script:
+#    - cd aliennet
+#    - npm install
+#    - npx hardhat compile
+
+#test:
+#  stage: test
+#  image: node:20
+#  script:
+#    - echo "Testing"
+#    - cd testnet
+#    - npx hardhat test
+
+#deploy:
+#  stage: deploy
+#  image: node:20
+#  script:
+#   - echo "Deploying"
+#   - export DOCKER_NODE_1_ADDRESS=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' alien-node-0) 
+#   - npx hardhat ignition deploy ./ignition/modules/Lock.js --network localhost # TO DO: trocar localhost por subip da rede alien/test
 
 cleanup:
   stage: cleanup
@@ -56,6 +93,7 @@ cleanup:
   script:
     - cd testnet 
     - source scripts/cleanup.sh
+
     - cd ../aliennet
     - source scripts/cleanup.sh
   when: always

@@ -10,7 +10,7 @@ services:
     entrypoint:
       - /bin/bash
       - -c
-      - besu --genesis-file=genesis/genesis.json  --rpc-http-port=8551 --p2p-port=30309 --rpc-http-enabled --sync-mode=FULL --bootnodes=enode://b1e80ca328dcd63667c8bd1941cafabc0b0c0b23b1ec4fdefe2f22a7e94eb7a6333cb54c80f773364cd3f347071fbb59205174244168fc2b80f5939a46d33ced@172.19.0.2:30307 --data-path=data
+      - besu --genesis-file=genesis/genesis.json  --rpc-http-port=8551 --p2p-port=30309 --rpc-http-enabled --sync-mode=FULL --bootnodes=enode://79cc84fe8fda4e4c02f30f65de2002f31b2075490f3ebf903ab96deecc55be666aa89b1c13c2b4150471e698565e714f126e4b2afb0be3351c1eb639baaa3f04@172.19.0.2:30307 --data-path=data
     ports:
       - "8551:8551"
       - "30309:30309"
@@ -28,7 +28,7 @@ services:
     entrypoint:
       - /bin/bash
       - -c
-      - besu --genesis-file=genesis/genesis.json --rpc-http-port=8552 --p2p-port=30310 --rpc-http-enabled --sync-mode=FAST --bootnodes=enode://b1e80ca328dcd63667c8bd1941cafabc0b0c0b23b1ec4fdefe2f22a7e94eb7a6333cb54c80f773364cd3f347071fbb59205174244168fc2b80f5939a46d33ced@172.19.0.2:30307 --data-path=data
+      - besu --genesis-file=genesis/genesis.json --rpc-http-port=8552 --p2p-port=30310 --rpc-http-enabled --sync-mode=FAST --bootnodes=enode://79cc84fe8fda4e4c02f30f65de2002f31b2075490f3ebf903ab96deecc55be666aa89b1c13c2b4150471e698565e714f126e4b2afb0be3351c1eb639baaa3f04@172.19.0.2:30307 --data-path=data
     ports:
       - "8552:8552"
       - "30310:30310"
