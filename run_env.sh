@@ -5,7 +5,7 @@ source scripts/setup_alien.sh
 cd ..
 
 cd testnet
-source scripts/setup_test.sh
+source scripts/setup_main.sh
 cd ..
 
 #sleep 10

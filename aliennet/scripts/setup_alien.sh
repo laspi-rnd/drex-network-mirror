@@ -1,5 +1,17 @@
 #! /bin/bash
 
+echo "Creating nodes directories"
+mkdir -p node/besu-0/data
+mkdir -p node/besu-1/data
+mkdir -p node/alien-0/data
+mkdir -p node/alien-1/data
+
+echo "Generating keys & genesis files"
+mkdir _tmp && cd _tmp
+besu operator generate-blockchain-config --config-file=../config/qbftConfigFile.json --to=networkFiles --private-key-file-name=key
+
+cd ..
+
 counter=0
 for folder in _tmp/networkFiles/keys/*; do
   folderName=$(basename "$folder")
@@ -65,5 +77,5 @@ echo "Starting nodes"
 docker compose -f docker/docker-compose-nodes.yaml up -d
 sleep 10
 
-echo "Starting client nodes"
-docker compose -f docker/docker-compose-clientnodes.yaml up -d
+#echo "Starting client nodes"
+#docker compose -f docker/docker-compose-clientnodes.yaml up -d

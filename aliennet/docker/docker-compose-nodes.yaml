@@ -10,7 +10,7 @@ services:
     entrypoint:
       - /bin/bash
       - -c
-      - besu --data-path=data  --rpc-http-port=8550 --p2p-port=30308 --genesis-file=genesis/genesis.json --bootnodes=enode://79cc84fe8fda4e4c02f30f65de2002f31b2075490f3ebf903ab96deecc55be666aa89b1c13c2b4150471e698565e714f126e4b2afb0be3351c1eb639baaa3f04@172.19.0.2:30307 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all"
+      - besu --data-path=data  --rpc-http-port=8550 --p2p-port=30308 --genesis-file=genesis/genesis.json --bootnodes=enode://1994497ea3997938ec4f2ef9856ac240d6aa0cfc9b44a810efbd59347c2f27eb57fbd8d6c0c0027ad31adf2f467c2fda22211cfd277a571aaa587607091ce525@172.19.0.2:30307 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all"
     ports:
       - "8550:8550"
       - "30308:30308"
