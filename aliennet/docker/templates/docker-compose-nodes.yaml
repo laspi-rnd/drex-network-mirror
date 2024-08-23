@@ -6,7 +6,7 @@ services:
     volumes:
       - ../node/besu-1/data:/opt/besu/data
       - ../genesis:/opt/besu/genesis
-    image: hyperledger/besu:latest
+    image: hyperledger/besu:24.5.2-amd64
     entrypoint:
       - /bin/bash
       - -c

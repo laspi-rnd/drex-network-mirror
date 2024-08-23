@@ -6,11 +6,11 @@ services:
     volumes:
       - ../node/besu-1/data:/opt/besu/data
       - ../genesis:/opt/besu/genesis
-    image: hyperledger/besu:latest
+    image: hyperledger/besu:24.5.2-amd64
     entrypoint:
       - /bin/bash
       - -c
-      - besu --data-path=data --genesis-file=genesis/genesis.json --bootnodes=enode://b3aa9be75b3dd9c088b795755b63e50fe34fce1dce8459b721e6c1d2d835f610236072684af04d2e5b23e26b406ece99ead4bca8d09169d0244e48b37ef66c34@172.20.0.2:30303 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all"
+      - besu --data-path=data --genesis-file=genesis/genesis.json --bootnodes=enode://1a7d51f80d2f0737a8b8c8b83bee20fadbf7103bed65bbcb014533fcd4ac5f91b765a440d980b40276863ebd87005c98b0adbf85d78913d8bf0d38eb277a2460@172.20.0.2:30303 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all"
     ports:
       - "8546:8545"
       - "30304:30303"
@@ -24,11 +24,11 @@ services:
     volumes:
       - ../node/besu-2/data:/opt/besu/data
       - ../genesis:/opt/besu/genesis
-    image: hyperledger/besu:latest
+    image: hyperledger/besu:24.5.2-amd64
     entrypoint:
       - /bin/bash
       - -c
-      - besu --data-path=data --genesis-file=genesis/genesis.json --bootnodes=enode://b3aa9be75b3dd9c088b795755b63e50fe34fce1dce8459b721e6c1d2d835f610236072684af04d2e5b23e26b406ece99ead4bca8d09169d0244e48b37ef66c34@172.20.0.2:30303 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all"
+      - besu --data-path=data --genesis-file=genesis/genesis.json --bootnodes=enode://1a7d51f80d2f0737a8b8c8b83bee20fadbf7103bed65bbcb014533fcd4ac5f91b765a440d980b40276863ebd87005c98b0adbf85d78913d8bf0d38eb277a2460@172.20.0.2:30303 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all"
     ports:
       - "8547:8545"
       - "30305:30303"
@@ -42,11 +42,11 @@ services:
     volumes:
       - ../node/besu-3/data:/opt/besu/data
       - ../genesis:/opt/besu/genesis
-    image: hyperledger/besu:latest
+    image: hyperledger/besu:24.5.2-amd64
     entrypoint:
       - /bin/bash
       - -c
-      - besu --data-path=data --genesis-file=genesis/genesis.json --bootnodes=enode://b3aa9be75b3dd9c088b795755b63e50fe34fce1dce8459b721e6c1d2d835f610236072684af04d2e5b23e26b406ece99ead4bca8d09169d0244e48b37ef66c34@172.20.0.2:30303 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all"
+      - besu --data-path=data --genesis-file=genesis/genesis.json --bootnodes=enode://1a7d51f80d2f0737a8b8c8b83bee20fadbf7103bed65bbcb014533fcd4ac5f91b765a440d980b40276863ebd87005c98b0adbf85d78913d8bf0d38eb277a2460@172.20.0.2:30303 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all"
     ports:
       - "8548:8545"
       - "30306:30303"

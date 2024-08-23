@@ -15,7 +15,7 @@ services:
       - "8551:8551"
       - "30309:30309"
     networks:
-      clients_network:
+      alien_network:
     restart: always
 
   alien-lightclient-node:
@@ -24,7 +24,7 @@ services:
     volumes:
       - ../node/alien-1/data:/opt/besu/data
       - ../genesis:/opt/besu/genesis
-    image: hyperledger/besu:latest
+    image: hyperledger/besu:24.5.2-amd64
     entrypoint:
       - /bin/bash
       - -c
@@ -33,9 +33,9 @@ services:
       - "8552:8552"
       - "30310:30310"
     networks:
-      clients_network:
+      alien_network:
     restart: always
 
 networks:
-  clients_network:
+  alien_network:
     external: true

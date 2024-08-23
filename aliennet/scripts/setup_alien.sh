@@ -29,10 +29,6 @@ if ! docker network ls | grep -q alien_network; then
   docker network create alien_network
 fi
 
-if ! docker network ls | grep -q clients_network; then
-  docker network create clients_network
-fi
-
 echo "Starting bootnode..."
 docker compose -f docker/docker-compose-bootnode.yaml up -d
 
@@ -77,5 +73,5 @@ echo "Starting nodes"
 docker compose -f docker/docker-compose-nodes.yaml up -d
 sleep 10
 
-#echo "Starting client nodes"
-#docker compose -f docker/docker-compose-clientnodes.yaml up -d
+echo "Starting client nodes"
+docker compose -f docker/docker-compose-clientnodes.yaml up -d
