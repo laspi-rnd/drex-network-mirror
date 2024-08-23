@@ -8,7 +8,9 @@ mkdir -p node/besu-3/data
 
 echo "Generating keys & genesis files"
 mkdir _tmp && cd _tmp
-besu operator generate-blockchain-config --config-file=../config/qbftConfigFile.json --to=networkFiles --private-key-file-name=key
+
+docker run --mount type=bind,source="$(pwd)"/../,target=/mainnet hyperledger/besu:24.5.2-amd64 operator generate-blockchain-config --config-file=/mainnet/config/qbftConfigFile.json --to=/mainnet/_tmp/networkFiles --private-key-file-name=key
+#besu operator generate-blockchain-config --config-file=../config/qbftConfigFile.json --to=networkFiles --private-key-file-name=key
 
 cd .. 
 
@@ -25,8 +27,8 @@ mkdir genesis && cp _tmp/networkFiles/genesis.json genesis/genesis.json
 rm -rf _tmp
 
 echo "Creating segregated network"
-if ! docker network ls | grep -q test_network; then
-  docker network create test_network
+if ! docker network ls | grep -q main_network; then
+  docker network create main_network
 fi
 
 echo "Starting bootnode"
@@ -61,7 +63,7 @@ fi
 echo "ENODE: $ENODE"
 
 export E_ADDRESS="${ENODE#enode://}"
-export DOCKER_NODE_1_ADDRESS=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' test-node-0)
+export DOCKER_NODE_1_ADDRESS=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' main-node-0)
 export E_ADDRESS=$(echo $E_ADDRESS | sed -e "s/127.0.0.1/$DOCKER_NODE_1_ADDRESS/g")
 echo $E_ADDRESS
 

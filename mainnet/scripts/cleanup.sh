@@ -1,6 +1,6 @@
 #! /bin/bash
 
-echo "Dropping Test Network Nodes..."
+echo "Dropping Main Network Nodes..."
 docker compose -f docker/docker-compose-nodes.yaml down
 docker compose -f docker/docker-compose-bootnode.yaml down
 

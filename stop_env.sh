@@ -1,6 +1,6 @@
 #! /bin/bash
 
-cd testnet 
+cd mainnet 
 source scripts/cleanup.sh
 
 cd ../aliennet

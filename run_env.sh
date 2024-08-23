@@ -4,7 +4,7 @@ cd aliennet
 source scripts/setup_alien.sh
 cd ..
 
-cd testnet
+cd mainnet
 source scripts/setup_main.sh
 cd ..
 

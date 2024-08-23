@@ -1,8 +1,8 @@
 version: '2.1'
 services:
-  test-node-0:
+  main-node-0:
     user: root
-    container_name: test-node-0
+    container_name: main-node-0
     volumes:
       - ../node/besu-0/data:/opt/besu/data
       - ../genesis:/opt/besu/genesis
@@ -10,15 +10,15 @@ services:
     entrypoint:
       - /bin/bash
       - -c
-      - besu --data-path=data --genesis-file=genesis/genesis.json --min-gas-price=0 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all" --metrics-enabled --metrics-host=test-node-0
+      - besu --data-path=data --genesis-file=genesis/genesis.json --min-gas-price=0 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all" --metrics-enabled --metrics-host=main-node-0
     ports:
       - "8545:8545"
       - "30303:30303"
       - "9545:9545"
     networks:
-      test_network:
+      main_network:
     restart: always
 
 networks:
-  test_network:
+  main_network:
     external: true

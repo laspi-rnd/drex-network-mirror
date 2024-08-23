@@ -1,8 +1,8 @@
 version: '2.1'
 services:
-  test-node-1:
+  main-node-1:
     user: root
-    container_name: test-node-1
+    container_name: main-node-1
     volumes:
       - ../node/besu-1/data:/opt/besu/data
       - ../genesis:/opt/besu/genesis
@@ -15,12 +15,12 @@ services:
       - "8546:8545"
       - "30304:30303"
     networks:
-      test_network:
+      main_network:
     restart: always
 
-  test-node-2:
+  main-node-2:
     user: root
-    container_name: test-node-2
+    container_name: main-node-2
     volumes:
       - ../node/besu-2/data:/opt/besu/data
       - ../genesis:/opt/besu/genesis
@@ -33,12 +33,12 @@ services:
       - "8547:8545"
       - "30305:30303"
     networks:
-      test_network:
+      main_network:
     restart: always
     
-  test-node-3:
+  main-node-3:
     user: root
-    container_name: test-node-3
+    container_name: main-node-3
     volumes:
       - ../node/besu-3/data:/opt/besu/data
       - ../genesis:/opt/besu/genesis
@@ -51,9 +51,9 @@ services:
       - "8548:8545"
       - "30306:30303"
     networks:
-      test_network:
+      main_network:
     restart: always
 
 networks:
-  test_network:
+  main_network:
     external: true
