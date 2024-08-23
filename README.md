@@ -11,14 +11,23 @@ Para executar o ambiente de testes, siga os passos a seguir:
 1. Clone o repositório do projeto:
 
 ```bash
-git clone
+git clone https://gitlab.laspi.ufrj.br/laspi-rnd/bacen-interoperabilidade/testenv.git
 ```
 
-2. Acesse o diretório do projeto:
+2. Inicialize o ambiente de testes:
+
+```bash
+source run_env.sh
+```
+
+O script `run_env.sh` irá criar todos os containers necessários para a execução do ambiente de testes.
 
 ## Interrompendo a Execução do Ambiente de Testes
 
+Para interromper a execução do ambiente de testes, basta executar o comando a seguir:
 
-## Acessando o Ambiente de Testes
+```bash
+source stop_env.sh
+```
 
-Basta apontar para localhost:<node-port>
+O script `stop_env.sh` irá interromper a execução de todos os containers criados pelo script `run_env.sh`, além de remover os arquivos temporários.
