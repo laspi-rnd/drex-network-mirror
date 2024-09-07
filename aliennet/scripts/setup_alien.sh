@@ -8,7 +8,7 @@ mkdir -p node/alien-1/data
 
 echo "Generating keys & genesis files"
 mkdir _tmp && cd _tmp
-docker run --mount type=bind,source="$(pwd)"/../,target=/aliennet hyperledger/besu:24.5.2-amd64 operator generate-blockchain-config --config-file=/aliennet/config/qbftConfigFile.json --to=/aliennet/_tmp/networkFiles --private-key-file-name=key
+docker run --user root --mount type=bind,source="$(pwd)"/../,target=/aliennet hyperledger/besu:24.5.2-amd64 operator generate-blockchain-config --config-file=/aliennet/config/qbftConfigFile.json --to=/aliennet/_tmp/networkFiles --private-key-file-name=key
 #besu operator generate-blockchain-config --config-file=../config/qbftConfigFile.json --to=networkFiles --private-key-file-name=key
 
 cd ..
