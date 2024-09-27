@@ -18,6 +18,16 @@
     "mixHash": "0x63746963616c2062797a616e74696e65206661756c7420746f6c6572616e6365",
     "coinbase": "0x0000000000000000000000000000000000000000",
     "alloc": {
+        "fe3b557e8fb62b89f4916b721be55ceb828dbd73": {
+          "privateKey": "8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63",
+          "comment": "This is Alice's Key. Private key and this comment are ignored.  In a real chain, the private key should NOT be stored",
+          "balance": "80000000000000000000000"
+        },
+        "f17f52151EbEF6C7334FAD080c5704D77216b732": {
+          "privateKey": "ae6ae8e5ccbfb04590405997ee2d52d2b330726137b875053c36d94e974d162f",
+          "comment": "This is Mike's Key. Private key and this comment are ignored.  In a real chain, the private key should NOT be stored",
+          "balance": "90000000000000000000000"
+        },
         "0x0000000000000000000000000000000000009999": {
             "comment": "Node Ingress smart contract",
             "balance": "0",

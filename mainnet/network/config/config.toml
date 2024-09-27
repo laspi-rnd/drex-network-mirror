@@ -10,7 +10,7 @@
 data-path="/opt/besu/data"
 genesis-file="/opt/besu/config/genesis.json"
 revert-reason-enabled=true
-identity="<função-participante-sequencial>"
+#identity="<função-participante-sequencial>"
 
 logging="TRACE"
 
