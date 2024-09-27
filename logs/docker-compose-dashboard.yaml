@@ -19,6 +19,9 @@ services:
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
+    user: root
+    volumes:
+      - ./data:/var/lib/grafana
     ports:
       - "3000:3000"
     networks:
