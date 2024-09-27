@@ -14,5 +14,9 @@ services:
       alien_network:
 
 networks:
-    alien_network:
+  alien_network:
     external: true
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.239.0/24

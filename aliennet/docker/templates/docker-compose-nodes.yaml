@@ -10,14 +10,19 @@ services:
     entrypoint:
       - /bin/bash
       - -c
-      - besu --data-path=data  --rpc-http-port=8545 --p2p-port=30303 --genesis-file=genesis/genesis.json --bootnodes=<ENODE> --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all"
+      - besu --data-path=data --genesis-file=genesis/genesis.json --bootnodes=<ENODE> --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all" --rpc-http-api=DEBUG,ETH,ADMIN,WEB3,QBFT,NET,PERM,TXPOOL,PLUGINS,MINER,TRACE
     ports:
       - "8550:8545"
       - "30308:30303"
     networks:
       alien_network:
+        ipv4_address: 172.16.239.3
     restart: always
 
 networks:
   alien_network:
     external: true
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.239.0/24

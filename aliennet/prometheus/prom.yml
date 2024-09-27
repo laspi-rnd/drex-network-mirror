@@ -12,4 +12,4 @@ scrape_configs:
     scheme: http
     static_configs:
       - targets:
-          - alien-node-0:9545
+          - 172.16.239.2:9545

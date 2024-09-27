@@ -12,11 +12,11 @@ scrape_configs:
     scheme: http
     static_configs:
       - targets:
-          - validator-main-1:9545
-          - validator-main-2:9545
-          - validator-main-3:9545
-          - validator-main-4:9545
-          - validator-main-5:9545
-          - validator-main-6:9545
-          - fullnode-main-1:9545
-          - fullnode-main-2:9545
+          - 172.16.238.2:9545
+          - 172.16.238.3:9545
+          - 172.16.238.4:9545
+          - 172.16.238.5:9545
+          - 172.16.238.6:9545
+          - 172.16.238.7:9545
+          - 172.16.238.8:9545
+          - 172.16.238.9:9545

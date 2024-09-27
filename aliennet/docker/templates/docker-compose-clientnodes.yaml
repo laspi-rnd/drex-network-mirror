@@ -10,12 +10,13 @@ services:
     entrypoint:
       - /bin/bash
       - -c
-      - besu --genesis-file=genesis/genesis.json  --rpc-http-port=8545 --p2p-port=30303 --rpc-http-enabled --sync-mode=FULL --bootnodes=<ENODE> --data-path=data
+      - besu --genesis-file=genesis/genesis.json --rpc-http-enabled --sync-mode=FULL --bootnodes=<ENODE> --data-path=data --rpc-http-api=DEBUG,ETH,ADMIN,WEB3,QBFT,NET,PERM,TXPOOL,PLUGINS,MINER,TRACE
     ports:
       - "8551:8545"
       - "30309:30303"
     networks:
       alien_network:
+        ipv4_address: 172.16.239.4
     restart: always
 
   alien-lightclient-node:
@@ -28,14 +29,19 @@ services:
     entrypoint:
       - /bin/bash
       - -c
-      - besu --genesis-file=genesis/genesis.json --rpc-http-port=8545 --p2p-port=30303 --rpc-http-enabled --sync-mode=FAST --bootnodes=<ENODE> --data-path=data
+      - besu --genesis-file=genesis/genesis.json --rpc-http-enabled --sync-mode=FAST --bootnodes=<ENODE> --data-path=data --rpc-http-api=DEBUG,ETH,ADMIN,WEB3,QBFT,NET,PERM,TXPOOL,PLUGINS,MINER,TRACE
     ports:
       - "8552:8545"
       - "30310:30303"
     networks:
       alien_network:
+        ipv4_address: 172.16.239.5
     restart: always
 
 networks:
   alien_network:
     external: true
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.239.0/24

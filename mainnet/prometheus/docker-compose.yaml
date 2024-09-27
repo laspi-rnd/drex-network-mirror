@@ -14,5 +14,9 @@ services:
       main_network:
 
 networks:
-    main_network:
+  main_network:
     external: true
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.238.0/24

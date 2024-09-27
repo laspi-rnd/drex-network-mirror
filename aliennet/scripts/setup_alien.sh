@@ -27,7 +27,7 @@ rm -rf _tmp
 
 echo "Creating segregated networks"
 if ! docker network ls | grep -q alien_network; then
-  docker network create alien_network
+  docker network create alien_network --subnet=172.16.239.0/24
 fi
 
 echo "Starting bootnode..."
@@ -71,8 +71,8 @@ sed "s/<ENODE>/enode:\/\/$E_ADDRESS/g" docker/templates/docker-compose-nodes.yam
 sed "s/<ENODE>/enode:\/\/$E_ADDRESS/g" docker/templates/docker-compose-clientnodes.yaml > docker/docker-compose-clientnodes.yaml
 
 echo "Starting nodes"
-docker compose -f docker/docker-compose-nodes.yaml up -d --remove-orphans
+docker compose -f docker/docker-compose-nodes.yaml up -d
 sleep 10
 
 echo "Starting client nodes"
-docker compose -f docker/docker-compose-clientnodes.yaml up -d --remove-orphans
+docker compose -f docker/docker-compose-clientnodes.yaml up -d
