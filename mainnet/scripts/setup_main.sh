@@ -2,7 +2,8 @@
 
 echo "Cleaning up previous data"
 for i in {1..8}; do
-  rm -rf network/nodes/node$i/data/*
+  rm -rf network/nodes/node$i/data
+  mkdir network/nodes/node$i/data
   cp network/nodes/node$i/keys/key network/nodes/node$i/data/key
 done
 
