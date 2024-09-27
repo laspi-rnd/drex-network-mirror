@@ -1,14 +1,22 @@
 #! /bin/bash
 
-cd aliennet
-source scripts/setup_alien.sh
-cd ..
+while getopts 'a:h' opt; do
+  case "$opt" in
+    a)
+      echo "Setting up alien network"
+      cd aliennet
+      source scripts/setup_alien.sh
+      cd ..
+      ;;
+   
+    ?|h)
+      echo "Usage: $(basename $0) [-a]"
+      exit 1
+      ;;
+  esac
+done
 
+echo "Setting up main network"
 cd mainnet
 source scripts/setup_main.sh
 cd ..
-
-#sleep 10
-#cd aliennet
-#source scripts/setup_alienclients.sh
-#cd ..

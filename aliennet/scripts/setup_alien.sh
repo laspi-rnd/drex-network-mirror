@@ -33,7 +33,7 @@ fi
 echo "Starting bootnode..."
 docker compose -f docker/docker-compose-bootnode.yaml up -d
 
-sleep 10
+sleep 20
 
 max_retries=30  # Maximum number of retries
 retry_delay=1  # Delay in seconds between retries
