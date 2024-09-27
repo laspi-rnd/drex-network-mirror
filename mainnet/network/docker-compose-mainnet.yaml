@@ -1,4 +1,3 @@
-version: '3.7'
 services:
   validator-main-1:
     image: hyperledger/besu:24.5.2-amd64

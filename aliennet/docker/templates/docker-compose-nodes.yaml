@@ -1,4 +1,3 @@
-version: '2.1'
 services:
   alien-node-1:
     user: root
