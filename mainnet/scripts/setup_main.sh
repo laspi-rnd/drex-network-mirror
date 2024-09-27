@@ -12,4 +12,4 @@ if ! docker network ls | grep -q main_network; then
 fi
 
 
-docker compose -f network/docker-compose.yaml up -d --remove-orphans
+docker compose -f network/docker-compose-mainnet.yaml up -d

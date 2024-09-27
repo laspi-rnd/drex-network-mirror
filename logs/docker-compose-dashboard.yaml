@@ -11,9 +11,19 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     networks:
+      alien_network:
+        ipv4_address: 172.16.239.6
       main_network:
+        ipv4_address: 172.16.238.10
 
 networks:
+  alien_network:
+    external: true
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.239.0/24
+  
   main_network:
     external: true
     driver: bridge

@@ -10,7 +10,7 @@ services:
     entrypoint:
       - /bin/bash
       - -c
-      - besu --data-path=data --genesis-file=genesis/genesis.json --min-gas-price=0 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all" --metrics-enabled --rpc-http-api=DEBUG,ETH,ADMIN,WEB3,QBFT,NET,PERM,TXPOOL,PLUGINS,MINER,TRACE
+      - besu --data-path=data --genesis-file=genesis/genesis.json --min-gas-price=0 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all" --metrics-enabled --metrics-host=0.0.0.0 --metrics-port=9545 --rpc-http-api=DEBUG,ETH,ADMIN,WEB3,QBFT,NET,PERM,TXPOOL,PLUGINS,MINER,TRACE
     ports:
       - "8549:8545"
       - "30307:30303"
