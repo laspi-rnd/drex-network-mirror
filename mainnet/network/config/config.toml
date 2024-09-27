@@ -1,0 +1,57 @@
+# Every possible CLI should be in this file.
+#
+# Please use a plausible value, besu has to at least be able to parse it.
+# If it is a multi-valued CLI make it a TOML array.
+# If it is a number or boolean make it a number or boolean
+# All other config options are strings, and must be quoted.
+
+# Node Information
+# Customizar
+data-path="/opt/besu/data"
+genesis-file="/opt/besu/config/genesis.json"
+revert-reason-enabled=true
+identity="<função-participante-sequencial>"
+
+logging="TRACE"
+
+# DOCKER | KUBERNETES | AUTO | NONE
+# Customizar
+nat-method="NONE"
+
+min-gas-price=0
+
+# Transaction Pool
+tx-pool="sequenced"   
+tx-pool-retention-hours=1   
+tx-pool-limit-by-account-percentage=1   
+tx-pool-max-size=2500
+
+# P2P network
+p2p-enabled=true
+discovery-enabled=false
+static-nodes-file="/opt/besu/config/static-nodes.json"
+#p2p-host="0.0.0.0"
+p2p-port=30303
+max-peers=25
+remote-connections-limit-enabled=false
+host-allowlist=["*"]
+
+# JSON-RPC
+rpc-http-api=["DEBUG", "ETH", "ADMIN", "WEB3", "QBFT", "NET", "PERM", "TXPOOL", "PLUGINS", "MINER", "TRACE"]
+rpc-http-cors-origins=["*"]
+rpc-http-enabled=true
+rpc-http-max-active-connections=2000
+#rpc-http-authentication-enabled=true
+#rpc-http-authentication-credentials-file="/etc/auth/auth.toml"
+
+# Metrics
+metrics-enabled=true
+metrics-host="0.0.0.0"
+metrics-port=9545
+
+# Permissioning (utilizar esses paramêtros para habilitar a permissão)
+permissions-nodes-contract-enabled=true
+permissions-nodes-contract-address="0x0000000000000000000000000000000000009999"
+permissions-nodes-contract-version=2
+permissions-accounts-contract-enabled=true
+permissions-accounts-contract-address="0xb3f31049dADf7Ab0239afc2f04568CB19543044D"

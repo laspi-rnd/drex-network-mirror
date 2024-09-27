@@ -1,0 +1,162 @@
+version: '3.7'
+services:
+  validator-main-1:
+    image: hyperledger/besu:24.5.2-amd64
+    container_name: validator-main-1
+    volumes:
+      - ./nodes/node1/keys:/opt/besu/keys
+      - ./nodes/node1/data:/opt/besu/data
+      - ./config:/opt/besu/config
+    entrypoint: 
+      - /bin/bash
+      - -c
+      - besu --config-file=/opt/besu/config/config.toml
+    ports:
+      - "30311:30303" # P2P
+      - "8253:8545"   # JSON-RPC
+      - "9547:9545"   # METRICS
+    networks:
+      main_network:
+        ipv4_address: 172.16.238.2
+    restart: always
+  validator-main-2:
+    image: hyperledger/besu:24.5.2-amd64
+    container_name: validator-main-2
+    volumes:
+      - ./nodes/node2/keys:/opt/besu/keys
+      - ./nodes/node2/data:/opt/besu/data
+      - ./config:/opt/besu/config
+    entrypoint: 
+      - /bin/bash
+      - -c
+      - besu --config-file=/opt/besu/config/config.toml
+    ports:
+      - "30312:30303" # P2P
+      - "8254:8545"   # JSON-RPC
+      - "9548:9545"   # METRICS
+    networks:
+      main_network:
+        ipv4_address: 172.16.238.3
+    restart: always
+  validator-main-3:
+    image: hyperledger/besu:24.5.2-amd64
+    container_name: validator-main-3
+    volumes:
+      - ./nodes/node3/keys:/opt/besu/keys
+      - ./nodes/node3/data:/opt/besu/data
+      - ./config:/opt/besu/config
+    entrypoint: 
+      - /bin/bash
+      - -c
+      - besu --config-file=/opt/besu/config/config.toml
+    ports:
+      - "30313:30303" # P2P
+      - "8255:8545"   # JSON-RPC
+      - "9549:9545"   # METRICS
+    networks:
+      main_network:
+        ipv4_address: 172.16.238.4
+    restart: always
+  validator-main-4:
+    image: hyperledger/besu:24.5.2-amd64
+    container_name: validator-main-4
+    volumes:
+      - ./nodes/node4/keys:/opt/besu/keys
+      - ./nodes/node4/data:/opt/besu/data
+      - ./config:/opt/besu/config
+    entrypoint: 
+      - /bin/bash
+      - -c
+      - besu --config-file=/opt/besu/config/config.toml
+    ports:
+      - "30314:30303" # P2P
+      - "8256:8545"   # JSON-RPC
+      - "9550:9545"   # METRICS
+    networks:
+      main_network:
+        ipv4_address: 172.16.238.5
+    restart: always
+  validator-main-5:
+    image: hyperledger/besu:24.5.2-amd64
+    container_name: validator-main-5
+    volumes:
+      - ./nodes/node5/keys:/opt/besu/keys
+      - ./nodes/node5/data:/opt/besu/data
+      - ./config:/opt/besu/config
+    entrypoint: 
+      - /bin/bash
+      - -c
+      - besu --config-file=/opt/besu/config/config.toml
+    ports:
+      - "30315:30303" # P2P
+      - "8257:8545"   # JSON-RPC
+      - "9551:9545"   # METRICS
+    networks:
+      main_network:
+        ipv4_address: 172.16.238.6
+    restart: always
+  validator-main-6:
+    image: hyperledger/besu:24.5.2-amd64
+    container_name: validator-main-6
+    volumes:
+      - ./nodes/node6/keys:/opt/besu/keys
+      - ./nodes/node6/data:/opt/besu/data
+      - ./config:/opt/besu/config
+    entrypoint: 
+      - /bin/bash
+      - -c
+      - besu --config-file=/opt/besu/config/config.toml
+    ports:
+      - "30316:30303" # P2P
+      - "8258:8545"   # JSON-RPC
+      - "9552:9545"   # METRICS
+    networks:
+      main_network:
+        ipv4_address: 172.16.238.7
+    restart: always
+  fullnode-main-1:
+    image: hyperledger/besu:24.5.2-amd64
+    container_name: fullnode-main-1
+    volumes:
+      - ./nodes/node7/keys:/opt/besu/keys
+      - ./nodes/node7/data:/opt/besu/data
+      - ./config:/opt/besu/config
+    entrypoint: 
+      - /bin/bash
+      - -c
+      - besu --config-file=/opt/besu/config/config.toml
+    ports:
+      - "30317:30303" # P2P
+      - "8259:8545"   # JSON-RPC
+      - "9553:9545"   # METRICS
+    networks:
+      main_network:
+        ipv4_address: 172.16.238.8
+    restart: always
+  fullnode-main-2:
+    image: hyperledger/besu:24.5.2-amd64
+    container_name: fullnode-main-2
+    volumes:
+      - ./nodes/node8/keys:/opt/besu/keys
+      - ./nodes/node8/data:/opt/besu/data
+      - ./config:/opt/besu/config
+    entrypoint: 
+      - /bin/bash
+      - -c
+      - besu --config-file=/opt/besu/config/config.toml
+    ports:
+      - "30318:30303" # P2P
+      - "8260:8545"   # JSON-RPC
+      - "9554:9545"   # METRICS
+    networks:
+      main_network:
+        ipv4_address: 172.16.238.9
+    restart: always
+
+networks:
+  main_network:
+    external: true
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.238.0/24
