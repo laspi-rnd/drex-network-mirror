@@ -3,6 +3,7 @@ services:
   validator-main-1:
     image: hyperledger/besu:24.5.2-amd64
     container_name: validator-main-1
+    user: root
     volumes:
       - ./nodes/node1/keys:/opt/besu/keys
       - ./nodes/node1/data:/opt/besu/data
@@ -22,6 +23,7 @@ services:
   validator-main-2:
     image: hyperledger/besu:24.5.2-amd64
     container_name: validator-main-2
+    user: root
     volumes:
       - ./nodes/node2/keys:/opt/besu/keys
       - ./nodes/node2/data:/opt/besu/data
@@ -41,6 +43,7 @@ services:
   validator-main-3:
     image: hyperledger/besu:24.5.2-amd64
     container_name: validator-main-3
+    user: root
     volumes:
       - ./nodes/node3/keys:/opt/besu/keys
       - ./nodes/node3/data:/opt/besu/data
@@ -60,6 +63,7 @@ services:
   validator-main-4:
     image: hyperledger/besu:24.5.2-amd64
     container_name: validator-main-4
+    user: root
     volumes:
       - ./nodes/node4/keys:/opt/besu/keys
       - ./nodes/node4/data:/opt/besu/data
@@ -79,6 +83,7 @@ services:
   validator-main-5:
     image: hyperledger/besu:24.5.2-amd64
     container_name: validator-main-5
+    user: root
     volumes:
       - ./nodes/node5/keys:/opt/besu/keys
       - ./nodes/node5/data:/opt/besu/data
@@ -98,6 +103,7 @@ services:
   validator-main-6:
     image: hyperledger/besu:24.5.2-amd64
     container_name: validator-main-6
+    user: root
     volumes:
       - ./nodes/node6/keys:/opt/besu/keys
       - ./nodes/node6/data:/opt/besu/data
@@ -117,6 +123,7 @@ services:
   fullnode-main-1:
     image: hyperledger/besu:24.5.2-amd64
     container_name: fullnode-main-1
+    user: root
     volumes:
       - ./nodes/node7/keys:/opt/besu/keys
       - ./nodes/node7/data:/opt/besu/data
@@ -136,6 +143,7 @@ services:
   fullnode-main-2:
     image: hyperledger/besu:24.5.2-amd64
     container_name: fullnode-main-2
+    user: root
     volumes:
       - ./nodes/node8/keys:/opt/besu/keys
       - ./nodes/node8/data:/opt/besu/data
