@@ -20,3 +20,6 @@ echo "Setting up main network"
 cd mainnet
 source scripts/setup_main.sh
 cd ..
+
+echo "Running Prometheus and Grafana"
+docker compose -f logs/docker-compose-dashboard.yaml up -d

@@ -15,6 +15,17 @@ services:
         ipv4_address: 172.16.239.6
       main_network:
         ipv4_address: 172.16.238.10
+  
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    networks:
+      alien_network:
+        ipv4_address: 172.16.239.7
+      main_network:
+        ipv4_address: 172.16.238.13
 
 networks:
   alien_network:

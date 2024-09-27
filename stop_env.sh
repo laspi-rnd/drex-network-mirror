@@ -7,3 +7,6 @@ cd ../aliennet
 source scripts/cleanup.sh
 
 cd ..
+
+echo "Stopping Prometheus and Grafana"
+docker compose -f logs/docker-compose-dashboard.yaml down
