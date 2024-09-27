@@ -10,10 +10,10 @@ services:
     entrypoint:
       - /bin/bash
       - -c
-      - besu --genesis-file=genesis/genesis.json  --rpc-http-port=8551 --p2p-port=30309 --rpc-http-enabled --sync-mode=FULL --bootnodes=<ENODE> --data-path=data
+      - besu --genesis-file=genesis/genesis.json  --rpc-http-port=8545 --p2p-port=30303 --rpc-http-enabled --sync-mode=FULL --bootnodes=<ENODE> --data-path=data
     ports:
-      - "8551:8551"
-      - "30309:30309"
+      - "8551:8545"
+      - "30309:30303"
     networks:
       alien_network:
     restart: always
@@ -28,10 +28,10 @@ services:
     entrypoint:
       - /bin/bash
       - -c
-      - besu --genesis-file=genesis/genesis.json --rpc-http-port=8552 --p2p-port=30310 --rpc-http-enabled --sync-mode=FAST --bootnodes=<ENODE> --data-path=data
+      - besu --genesis-file=genesis/genesis.json --rpc-http-port=8545 --p2p-port=30303 --rpc-http-enabled --sync-mode=FAST --bootnodes=<ENODE> --data-path=data
     ports:
-      - "8552:8552"
-      - "30310:30310"
+      - "8552:8545"
+      - "30310:30303"
     networks:
       alien_network:
     restart: always

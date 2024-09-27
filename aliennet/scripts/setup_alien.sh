@@ -71,8 +71,8 @@ sed "s/<ENODE>/enode:\/\/$E_ADDRESS/g" docker/templates/docker-compose-nodes.yam
 sed "s/<ENODE>/enode:\/\/$E_ADDRESS/g" docker/templates/docker-compose-clientnodes.yaml > docker/docker-compose-clientnodes.yaml
 
 echo "Starting nodes"
-docker compose -f docker/docker-compose-nodes.yaml up -d
+docker compose -f docker/docker-compose-nodes.yaml up -d --remove-orphans
 sleep 10
 
 echo "Starting client nodes"
-docker compose -f docker/docker-compose-clientnodes.yaml up -d
+docker compose -f docker/docker-compose-clientnodes.yaml up -d --remove-orphans
