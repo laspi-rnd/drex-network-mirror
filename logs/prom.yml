@@ -29,7 +29,7 @@ scrape_configs:
           - validator-main-2:9545
           - validator-main-3:9545
           - validator-main-4:9545
-          - validator-main-5:9545
-          - validator-main-6:9545
+          - fullnode-participantA-1:9545
+          - fullnode-participantB-1:9545
           - fullnode-main-1:9545
           - fullnode-main-2:9545

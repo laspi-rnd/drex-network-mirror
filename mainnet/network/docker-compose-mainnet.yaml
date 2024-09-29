@@ -79,9 +79,9 @@ services:
       main_network:
         ipv4_address: 172.16.238.5
     restart: always
-  validator-main-5:
+  fullnode-participantA-1:
     image: hyperledger/besu:24.5.2-amd64
-    container_name: validator-main-5
+    container_name: fullnode-participantA-1
     user: root
     volumes:
       - ./nodes/node5/keys:/opt/besu/keys
@@ -99,9 +99,9 @@ services:
       main_network:
         ipv4_address: 172.16.238.6
     restart: always
-  validator-main-6:
+  fullnode-participantB-1:
     image: hyperledger/besu:24.5.2-amd64
-    container_name: validator-main-6
+    container_name: fullnode-participantB-1
     user: root
     volumes:
       - ./nodes/node6/keys:/opt/besu/keys

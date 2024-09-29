@@ -1,18 +1,11 @@
 #! /bin/bash
 
-while getopts 'amlh' opt; do
+while getopts 'alh' opt; do
   case "$opt" in
     a)
       echo "Setting up alien network"
       cd aliennet
       source scripts/setup_alien.sh
-      cd ..
-      ;;
-
-    m)
-      echo "Setting up main network"
-      cd mainnet
-      source scripts/setup_main.sh
       cd ..
       ;;
     
@@ -27,3 +20,8 @@ while getopts 'amlh' opt; do
       ;;
   esac
 done
+
+echo "Setting up main network"
+cd mainnet
+source scripts/setup_main.sh
+cd ..
