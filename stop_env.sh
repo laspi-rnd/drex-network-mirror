@@ -1,7 +1,7 @@
 #! /bin/bash
 
 cd mainnet 
-source scripts/cleanup.sh
+source scripts/cleanup.sh $1
 
 cd ../aliennet
 source scripts/cleanup.sh

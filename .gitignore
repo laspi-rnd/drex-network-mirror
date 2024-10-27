@@ -5,3 +5,5 @@ aliennet/node/
 
 !aliennet/docker/templates/*
 !aliennet/docker/docker-compose-bootnode.yaml
+
+examples/node_modules

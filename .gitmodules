@@ -1,0 +1,3 @@
+[submodule "permissioning-smart-contracts"]
+	path = permissioning-smart-contracts
+	url = https://gitlab.laspi.ufrj.br/laspi-rnd/bacen-interoperabilidade/permissioning-smart-contracts.git
