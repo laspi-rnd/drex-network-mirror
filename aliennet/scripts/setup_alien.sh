@@ -27,13 +27,13 @@ rm -rf _tmp
 
 echo "Creating segregated networks"
 if ! docker network ls | grep -q alien_network; then
-  docker network create alien_network
+  docker network create alien_network --subnet=172.16.239.0/24
 fi
 
 echo "Starting bootnode..."
 docker compose -f docker/docker-compose-bootnode.yaml up -d
 
-sleep 10
+sleep 20
 
 max_retries=30  # Maximum number of retries
 retry_delay=1  # Delay in seconds between retries

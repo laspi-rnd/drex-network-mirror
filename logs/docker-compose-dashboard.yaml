@@ -1,0 +1,44 @@
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prom.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      alien_network:
+        ipv4_address: 172.16.239.6
+      main_network:
+        ipv4_address: 172.16.238.10
+  
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    user: root
+    volumes:
+      - ./data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    networks:
+      alien_network:
+        ipv4_address: 172.16.239.7
+      main_network:
+        ipv4_address: 172.16.238.13
+
+networks:
+  alien_network:
+    external: true
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.239.0/24
+  
+  main_network:
+    external: true
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.238.0/24

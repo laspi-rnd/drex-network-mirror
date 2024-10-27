@@ -1,6 +1,9 @@
-node_modules/
-node
-genesis
-cache
-artifacts
-data
+mainnet/network/nodes/node*/data/
+aliennet/docker/
+aliennet/genesis/
+aliennet/node/
+
+!aliennet/docker/templates/*
+!aliennet/docker/docker-compose-bootnode.yaml
+
+examples/node_modules

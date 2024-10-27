@@ -1,11 +1,10 @@
 #! /bin/bash
 
-echo "Dropping Main Network Nodes..."
-docker compose -f docker/docker-compose-nodes.yaml down
-docker compose -f docker/docker-compose-bootnode.yaml down
+docker compose -f network/docker-compose-mainnet.yaml down 
 
-echo "Removing Nodes Data Directories..."
-rm -rf node/ genesis _tmp
-
-echo "Removing Solidity Compiler Cache..."
-rm -rf cache artifacts
+if [[ $1 ]]; then
+    echo "Cleaning up data"
+    for i in {1..8}; do
+    rm -rf network/nodes/node$i/data
+    done
+fi

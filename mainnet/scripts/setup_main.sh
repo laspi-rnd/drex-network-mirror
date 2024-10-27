@@ -1,72 +1,15 @@
-#! /bin/bash 
+#! /bin/bash
 
-echo "Creating nodes directories"
-mkdir -p node/besu-0/data
-mkdir -p node/besu-1/data
-mkdir -p node/besu-2/data
-mkdir -p node/besu-3/data
-
-echo "Generating keys & genesis files"
-mkdir _tmp && cd _tmp
-
-docker run --user root --mount type=bind,source="$(pwd)"/../,target=/mainnet hyperledger/besu:24.5.2-amd64 operator generate-blockchain-config --config-file=/mainnet/config/qbftConfigFile.json --to=/mainnet/_tmp/networkFiles --private-key-file-name=key
-#besu operator generate-blockchain-config --config-file=../config/qbftConfigFile.json --to=networkFiles --private-key-file-name=key
-
-cd .. 
-
-counter=0
-for folder in _tmp/networkFiles/keys/*; do
-  folderName=$(basename "$folder")
-  cp _tmp/networkFiles/keys/$folderName/key node/besu-$counter/data/key
-  cp _tmp/networkFiles/keys/$folderName/key.pub node/besu-$counter/data/key,pub
-  ((counter++))
-done
-
-mkdir genesis && cp _tmp/networkFiles/genesis.json genesis/genesis.json
-
-rm -rf _tmp
-
-echo "Creating segregated network"
-if ! docker network ls | grep -q main_network; then
-  docker network create main_network
-fi
-
-echo "Starting bootnode"
-docker compose -f docker/docker-compose-bootnode.yaml up -d
-
-sleep 10
-
-max_retries=30  # Maximum number of retries
-retry_delay=1  # Delay in seconds between retries
-retry_count=0  # Initialize the retry count
-
-while [ $retry_count -lt $max_retries ]; do
-  export ENODE=$(curl -X POST --data '{"jsonrpc":"2.0","method":"net_enode","params":[],"id":1}' http://127.0.0.1:8545 | jq -r '.result')
-
-  if [ -n "$ENODE" ]; then
-    # check if the enode is not null
-    if [ "$ENODE" != "null" ]; then
-      echo "ENODE retrieved successfully."
-      break  # Exit the loop if successful
-    fi
-  else
-    echo "Failed to retrieve ENODE. Retrying in $retry_delay seconds..."
-    sleep $retry_delay
-    ((retry_count++))
+for i in {1..8}; do
+  if [ ! -d "network/nodes/node$i/data" ]; then
+    mkdir network/nodes/node$i/data
+    cp network/nodes/node$i/keys/key network/nodes/node$i/data/key
   fi
-done
+done 
 
-if [ $retry_count -eq $max_retries ]; then
-  echo "Max retries reached. Unable to retrieve ENODE."
+echo "Creating segregated networks"
+if ! docker network ls | grep -q main_network; then
+  docker network create --subnet=172.16.238.0/24 main_network
 fi
 
-echo "ENODE: $ENODE"
-
-export E_ADDRESS="${ENODE#enode://}"
-export DOCKER_NODE_1_ADDRESS=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' main-node-0)
-export E_ADDRESS=$(echo $E_ADDRESS | sed -e "s/127.0.0.1/$DOCKER_NODE_1_ADDRESS/g")
-echo $E_ADDRESS
-
-sed "s/<ENODE>/enode:\/\/$E_ADDRESS/g" docker/templates/docker-compose-nodes.yaml > docker/docker-compose-nodes.yaml
-echo "Starting nodes"
-docker compose -f docker/docker-compose-nodes.yaml up -d
+docker compose -f network/docker-compose-mainnet.yaml up -d

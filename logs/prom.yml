@@ -1,0 +1,35 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["prometheus:9090"]
+
+  - job_name: aliennetwork
+    scrape_interval: 15s
+    scrape_timeout: 10s
+    metrics_path: /metrics
+    scheme: http
+    static_configs:
+      - targets:
+          - alien-node-0:9545
+          - alien-node-1:9545
+          - alien-fullclient-node:9545
+          - alien-lightclient-node:9545
+
+  - job_name: mainnetwork
+    scrape_interval: 15s
+    scrape_timeout: 10s
+    metrics_path: /metrics
+    scheme: http
+    static_configs:
+      - targets:
+          - validator-main-1:9545
+          - validator-main-2:9545
+          - validator-main-3:9545
+          - validator-main-4:9545
+          - fullnode-participantA-1:9545
+          - fullnode-participantB-1:9545
+          - fullnode-main-1:9545
+          - fullnode-main-2:9545

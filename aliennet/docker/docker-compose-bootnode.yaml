@@ -1,4 +1,3 @@
-version: '2.1'
 services:
   alien-node-0:
     user: root
@@ -10,15 +9,20 @@ services:
     entrypoint:
       - /bin/bash
       - -c
-      - besu --data-path=data  --rpc-http-port=8549 --p2p-port=30307 --genesis-file=genesis/genesis.json --min-gas-price=0 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all" --metrics-enabled --metrics-host=alien-node-0
+      - besu --data-path=data --genesis-file=genesis/genesis.json --min-gas-price=0 --rpc-http-enabled --rpc-http-api=ETH,NET,QBFT --host-allowlist="*" --rpc-http-cors-origins="all" --metrics-enabled --metrics-host=0.0.0.0 --metrics-port=9545 --rpc-http-api=DEBUG,ETH,ADMIN,WEB3,QBFT,NET,PERM,TXPOOL,PLUGINS,MINER,TRACE
     ports:
-      - "8549:8549"
-      - "30307:30307"
-      - "9546:9546"
+      - "8549:8545"
+      - "30307:30303"
+      - "9546:9545"
     networks:
       alien_network:
+        ipv4_address: 172.16.239.2
     restart: always
 
 networks:
   alien_network:
     external: true
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.239.0/24
