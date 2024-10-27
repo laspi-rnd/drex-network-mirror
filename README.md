@@ -59,3 +59,8 @@ Salve os endereços de deploy dos contratos de permissionamento, pois eles serã
 
 # Adicionar carteiras, nós ou administradores:
 
+Na pasta `examples` existem exemplos de como adicionar carteiras, nós ou administradores.
+
+# TO DO
+    - Migrate from truffle to hardhat
+    - RPC credentials
