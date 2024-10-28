@@ -1,53 +1,53 @@
-## Ambiente de Testes
+## Test Environment
 
-A arquitetura do ambiente de testes é apresentada na Figura 1.
+The test environment architecture is presented in Figure 1.
 
-![Figura 1 - Arquitetura do Ambiente de Testes](assets/network.png)
+![Figure 1 - Test Environment Architecture](assets/network.png)
 
-## Execução do Ambiente de Testes
+## Running the Test Environment
 
-Para executar o ambiente de testes, siga os passos a seguir:
+To run the test environment, follow these steps:
 
-1. Clone o repositório do projeto:
+1. Clone the project repository:
 
 ```bash
 git clone https://gitlab.laspi.ufrj.br/laspi-rnd/bacen-interoperabilidade/testenv.git
 git submodule update --init --recursive
 ```
 
-2. Inicialize o ambiente de testes:
+2. Initialize the test environment:
 
 ```bash
 ./run_env.sh
 ```
 
-O script `run_env.sh` irá criar todos os containers necessários para a execução do ambiente de testes. Caso seja a primeira execução ou após reset do ambiente de testes, é necessário configurar o [permissionamento no ambiente de testes](#configurando-o-permissionamento-no-ambiente-de-testes). 
+The `run_env.sh` script will create all the necessary containers for running the test environment. If this is the first run or after resetting the test environment, it's necessary to configure [permissioning in the test environment](#configuring-permissioning-in-the-test-environment).
 
-É possível especificar quais serviços serão executados no ambiente de testes. Para isso, basta passar -l (para Prometheus e Grafana) ou -a (para Aliennet) para o script `run_env.
+It’s possible to specify which services will run in the test environment. To do so, pass -l (for Prometheus and Grafana) or -a (for Aliennet) to the `run_env` script.
 
 ```bash	
 ./run_env.sh -la
 ```
 
-Executa a instância do Prometheus, Grafana e Aliennet junto com a rede de testes.
+This will run instances of Prometheus, Grafana, and Aliennet along with the test network (mainnet).
 
-## Interrompendo a Execução do Ambiente de Testes
+## Stopping the Test Environment
 
-Para interromper a execução do ambiente de testes, basta executar o comando a seguir:
+To stop the test environment, run the following command:
 
 ```bash
 ./stop_env.sh
 ```
 
-O script `stop_env.sh` irá interromper a execução de todos os containers criados pelo script `run_env.sh`. É possível remover os arquivos temporários, perdendo COMPLETAMENTE TODOS OS DADOS da rede anterior usando a opção -r.
+The `stop_env.sh` script will stop all containers created by the `run_env.sh` script. Temporary files can be removed, COMPLETELY DELETING ALL DATA from the previous network using the -r option.
 
 ```bash
 ./stop_env.sh -r
 ```
 
-## Configurando o permissionamento no ambiente de testes
+## Configuring Permissioning in the Test Environment
 <a name="permissioning"></a>
-Essa etapa deve ser realizada apenas em casos de primeira execução do ambiente de testes ou após reset do ambiente de testes. Para configurar o permissionamento no ambiente de testes, execute o comando a seguir:
+This step should only be performed during the first execution of the test environment or after a reset. To configure permissioning in the test environment, run the following command:
 
 ```bash
 cd permissioning-smart-contracts
@@ -56,12 +56,12 @@ npm install -g truffle
 truffle migrate --reset --network besu
 ```
 
-Salve os endereços de deploy dos contratos de permissionamento, pois eles serão necessários para modificar a estrutura da rede de testes.
+Save the permissioning contract deployment addresses, as they will be needed to modify the test network structure.
 
-# Adicionar carteiras, nós ou administradores:
+# Adding wallets, nodes, or administrators:
 
-Na pasta `examples` existem exemplos de como adicionar carteiras, nós ou administradores.
+In the `examples` folder, there are examples of how to add wallets, nodes, or administrators.
 
 # TO DO
-    - Migrate from truffle to hardhat
-    - RPC credentials
+   - Migrate from Truffle to Hardhat
+   - RPC credentials

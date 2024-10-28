@@ -1,39 +1,37 @@
 const { ethers } = require("ethers");
-const AccountRulesContract = require('../permissioning-smart-contracts/src/chain/abis/AccountRules.json');
+const AccountRulesContract = require('../permissioning-smart-contracts/src/chain/abis/AccountRules.json'); // the ABI of the AccountRules contract
 
-// Configurações
-const providerUrl = "http://localhost:8253"; // some node RPC url
-const privateKey = "0xc87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3";
-const AccountRulesContractAddress = "0x09a9f29b4bF233aD82bD0D9075dB3ce88686A851"; // endereço do contrato de Rules
+const providerUrl = "http://localhost:8253"; // any node RPC endpoint
+const privateKey = "0xc87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3"; // an admin account private key
+const AccountRulesContractAddress = "0x09a9f29b4bF233aD82bD0D9075dB3ce88686A851"; // deployed address of the AccountRules contract
 
-// Inicialização
 const provider = new ethers.JsonRpcProvider(providerUrl);
 const adminWallet = new ethers.Wallet(privateKey, provider);
 const AccountRules = new ethers.Contract(AccountRulesContractAddress, AccountRulesContract.abi, adminWallet);
 
-// Chamar a Função
-async function AdicionarNovaCarteira(numAccounts) {
+async function CreateNewAccounts(numAccounts) {
     try {
         const accounts = [];
 
         for (let i = 0; i < numAccounts; i++) {
-            const newWallet = ethers.Wallet.createRandom(provider); // Cria uma nova conta
+            const newWallet = ethers.Wallet.createRandom(provider); // create a new random wallet
             accounts.push(newWallet);
         }
 
         for (let i = 0; i < accounts.length; i++) {
-            const tx = await AccountRules.addAccount(
+            const tx = await AccountRules.addAccount( 
                 accounts[i].address,
-            );
-            const receipt = await tx.wait(); // Aguardar a confirmação da transação
+            ); // send the transaction to the contract to add the account
+
+            const receipt = await tx.wait(); // await the transaction receipt
             console.log("Account", accounts[i].address, " added to the list of accounts");
             console.log(accounts[i].privateKey)
-            // you SHOULD save the privatekey and address info in a file
+            // you SHOULD save the privatekey and address into a file
         }
 
     } catch (error) {
-        console.error("Erro ao interagir com o contrato:", error);
+        console.error("Error handling the contracts:", error);
     }
 }
 
-AdicionarNovaCarteira(10);
+CreateNewAccounts(10);
