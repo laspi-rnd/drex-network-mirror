@@ -2,7 +2,7 @@
 
 A arquitetura do ambiente de testes é apresentada na Figura 1.
 
-![Figura 1 - Arquitetura do Ambiente de Testes](assets/network.svg)
+![Figura 1 - Arquitetura do Ambiente de Testes](assets/network.png)
 
 ## Execução do Ambiente de Testes
 
@@ -52,6 +52,7 @@ Essa etapa deve ser realizada apenas em casos de primeira execução do ambiente
 ```bash
 cd permissioning-smart-contracts
 npm install --force
+npm install -g truffle
 truffle migrate --reset --network besu
 ```
 
