@@ -13,6 +13,8 @@ To run the test environment, follow these steps:
 ```bash
 git clone https://gitlab.laspi.ufrj.br/laspi-rnd/bacen-interoperabilidade/testenv.git
 git submodule update --init --recursive
+npm install --save-dev hardhat
+wget https://github.com/hyperledger/firefly-cli/releases/download/<installer> && sudo tar -zxf firefly-cli_*.tar.gz -C /usr/local/bin ff && rm firefly-cli_*.tar.gz
 ```
 
 2. Initialize the test environment:
@@ -65,3 +67,6 @@ In the `examples` folder, there are examples of how to add wallets, nodes, or ad
 # TO DO
    - Migrate from Truffle to Hardhat
    - RPC credentials
+   - create a docker compose for "DREX supernode"
+   - create a docker compose for "BACEN infrastructure"
+   
