@@ -13,4 +13,6 @@ if ! docker network ls | grep -q main_network; then
 fi
 
 docker compose -f network/docker-compose-mainnet.yaml up -d
+sleep 15
+source scripts/setup_starfish.sh
 docker compose -f network/starfish.yaml up -d
