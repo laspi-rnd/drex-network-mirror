@@ -1,6 +1,7 @@
 #! /bin/bash
 
 docker compose -f network/docker-compose-mainnet.yaml down 
+docker compose -f network/starfish.yaml down
 
 if [[ $1 ]]; then
     echo "Cleaning up data"

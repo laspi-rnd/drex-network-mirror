@@ -13,3 +13,4 @@ if ! docker network ls | grep -q main_network; then
 fi
 
 docker compose -f network/docker-compose-mainnet.yaml up -d
+docker compose -f network/starfish.yaml up -d

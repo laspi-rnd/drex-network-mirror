@@ -1,0 +1,153 @@
+services:
+  redis:
+    image: redis:7
+    container_name: starfish-redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      main_network:
+        ipv4_address: 172.16.238.10
+
+  starfish-evm-connector-1:
+    build: .
+    image: starfish-evm-connector
+    container_name: starfish-evm-connector-1
+    ports:
+      - "8080:80"
+    environment:
+      CELERY_BROKER_URL: "redis://redis:6379/0"
+      ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
+      MIDDLEWARE_BASE_URL: "http://starfish-middleware-1:8090"
+      REDIS_URL: "redis://redis:6379/0"
+      BLOCK_CONFIRMATIONS: 50
+    depends_on:
+      redis:
+        condition: service_healthy
+      starfish-middleware-1:
+        condition: service_healthy
+    networks:
+      main_network:
+        ipv4_address: 172.16.238.21
+
+  starfish-evm-connector-2:
+    build: .
+    image: starfish-evm-connector
+    container_name: starfish-evm-connector-2
+    ports:
+      - "8081:80"
+    environment:
+      CELERY_BROKER_URL: "redis://redis:6379/1"
+      ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
+      MIDDLEWARE_BASE_URL: "http://starfish-middleware-2:8091"
+      REDIS_URL: "redis://redis:6379/1"
+      BLOCK_CONFIRMATIONS: 50
+    depends_on:
+      redis:
+        condition: service_healthy
+      starfish-middleware-2:
+        condition: service_healthy
+    networks:
+      main_network:
+        ipv4_address: 172.16.238.61
+
+  starfish-evm-connector-3:
+    build: .
+    image: starfish-evm-connector
+    container_name: starfish-evm-connector-3
+    ports:
+      - "8082:80"
+    environment:
+      CELERY_BROKER_URL: "redis://redis:6379/2"
+      ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
+      MIDDLEWARE_BASE_URL: "http://starfish-middleware-3:8092"
+      REDIS_URL: "redis://redis:6379/2"
+      BLOCK_CONFIRMATIONS: 50
+    depends_on:
+      redis:
+        condition: service_healthy
+      starfish-middleware-3:
+        condition: service_healthy
+    networks:
+      main_network:
+        ipv4_address: 172.16.238.71
+
+  starfish-middleware-1:
+    build: .
+    image: starfish-middleware
+    container_name: starfish-middleware-1
+    environment:
+      CONNECTOR_EVM_API_BASE_URL: "http://starfish-evm-connector-1:8080"
+      FIREFLY_API_HOST: "127.0.0.1"
+      FIREFLY_API_PORT: 8000
+      FIREFLY_API_SCHEME: "http"
+      LISTRACK_CONTRACT_API_NAME: "listrack-eth"
+      LISTRACK_CONTRACT_JSON_PATH: "/artifacts/contracts/LISTRACK_ETH.sol/LISTRACK_ETH.json"
+      REDIS_URL: "redis://redis:6379/0"
+
+      MIDDLEWARE_CALLBACK_PORT: 8090
+      MIDDLEWARE_CALLBACK_URL: "http://starfish-middleware-1:8090"
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      main_network:
+        ipv4_address: 172.16.238.20
+    command: ["sh", "-c", "./main.sh"]
+
+  starfish-middleware-2:
+    build: .
+    image: starfish-middleware
+    container_name: starfish-middleware-2
+    environment:
+      CONNECTOR_EVM_API_BASE_URL: "http://starfish-evm-connector-2:8081"
+      FIREFLY_API_HOST: "127.0.0.1"
+      FIREFLY_API_PORT: 8001
+      FIREFLY_API_SCHEME: "http"
+      LISTRACK_CONTRACT_API_NAME: "listrack-eth"
+      LISTRACK_CONTRACT_JSON_PATH: "/artifacts/contracts/LISTRACK_ETH.sol/LISTRACK_ETH.json"
+      REDIS_URL: "redis://redis:6379/1"
+
+      MIDDLEWARE_CALLBACK_PORT: 8091
+      MIDDLEWARE_CALLBACK_URL: "http://starfish-middleware-2:8091"
+    depends_on:
+      redis:
+      condition: service_healthy
+    networks:
+      main_network:
+        ipv4_address: 172.16.238.60
+    command: ["sh", "-c", "./main.sh"]
+
+  starfish-middleware-3:
+    build: .
+    image: starfish-middleware
+    container_name: starfish-middleware-3
+    environment:
+      CONNECTOR_EVM_API_BASE_URL: "http://starfish-evm-connector-3:8082"
+      FIREFLY_API_HOST: "127.0.0.1"
+      FIREFLY_API_PORT: 8002
+      FIREFLY_API_SCHEME: "http"
+      LISTRACK_CONTRACT_API_NAME: "listrack-eth"
+      LISTRACK_CONTRACT_JSON_PATH: "/artifacts/contracts/LISTRACK_ETH.sol/LISTRACK_ETH.json"
+      REDIS_URL: "redis://redis:6379/2"
+
+      MIDDLEWARE_CALLBACK_PORT: 8092
+      MIDDLEWARE_CALLBACK_URL: "http://starfish-middleware-3:8092/callback/evm"
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      main_network:
+        ipv4_address: 172.16.238.70
+    command: ["sh", "-c", "./main.sh"]
+
+networks:
+  main_network:
+    external: true
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.238.0/24
