@@ -23,7 +23,7 @@ services:
       ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
       MIDDLEWARE_BASE_URL: "http://starfish-middleware-1:8090"
       REDIS_URL: "redis://redis:6379/0"
-      BLOCK_CONFIRMATIONS: 50
+      BLOCK_CONFIRMATIONS: "50"
     depends_on:
       redis:
         condition: service_healthy
@@ -44,7 +44,7 @@ services:
       ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
       MIDDLEWARE_BASE_URL: "http://starfish-middleware-2:8091"
       REDIS_URL: "redis://redis:6379/1"
-      BLOCK_CONFIRMATIONS: 50
+      BLOCK_CONFIRMATIONS: "50"
     depends_on:
       redis:
         condition: service_healthy
@@ -65,7 +65,7 @@ services:
       ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
       MIDDLEWARE_BASE_URL: "http://starfish-middleware-3:8092"
       REDIS_URL: "redis://redis:6379/2"
-      BLOCK_CONFIRMATIONS: 50
+      BLOCK_CONFIRMATIONS: "50"
     depends_on:
       redis:
         condition: service_healthy
@@ -87,7 +87,6 @@ services:
       LISTRACK_CONTRACT_API_NAME: "listrack-eth"
       LISTRACK_CONTRACT_JSON_PATH: "/artifacts/contracts/LISTRACK_ETH.sol/LISTRACK_ETH.json"
       REDIS_URL: "redis://redis:6379/0"
-
       MIDDLEWARE_CALLBACK_PORT: 8090
       MIDDLEWARE_CALLBACK_URL: "http://starfish-middleware-1:8090"
     depends_on:
@@ -110,12 +109,11 @@ services:
       LISTRACK_CONTRACT_API_NAME: "listrack-eth"
       LISTRACK_CONTRACT_JSON_PATH: "/artifacts/contracts/LISTRACK_ETH.sol/LISTRACK_ETH.json"
       REDIS_URL: "redis://redis:6379/1"
-
       MIDDLEWARE_CALLBACK_PORT: 8091
       MIDDLEWARE_CALLBACK_URL: "http://starfish-middleware-2:8091"
     depends_on:
       redis:
-      condition: service_healthy
+        condition: service_healthy
     networks:
       main_network:
         ipv4_address: 172.16.238.60
@@ -133,7 +131,6 @@ services:
       LISTRACK_CONTRACT_API_NAME: "listrack-eth"
       LISTRACK_CONTRACT_JSON_PATH: "/artifacts/contracts/LISTRACK_ETH.sol/LISTRACK_ETH.json"
       REDIS_URL: "redis://redis:6379/2"
-
       MIDDLEWARE_CALLBACK_PORT: 8092
       MIDDLEWARE_CALLBACK_URL: "http://starfish-middleware-3:8092/callback/evm"
     depends_on:
