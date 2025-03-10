@@ -29,7 +29,7 @@ services:
     environment:
       CELERY_BROKER_URL: redis://172.16.238.10:6379/0
       ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
-      MIDDLEWARE_BASE_URL: http://starfish-middleware-1:8090
+      MIDDLEWARE_BASE_URL: http://127.0.0.1:8090
       REDIS_URL: redis://172.16.238.10:6379/0
       BLOCK_CONFIRMATIONS: "50"
     depends_on:
@@ -50,7 +50,7 @@ services:
     environment:
       CELERY_BROKER_URL: redis://172.16.238.10:6379/1
       ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
-      MIDDLEWARE_BASE_URL: http://starfish-middleware-2:8091
+      MIDDLEWARE_BASE_URL: http://127.0.0.1:8091
       REDIS_URL: redis://172.16.238.10:6379/1
       BLOCK_CONFIRMATIONS: "50"
     depends_on:
@@ -71,7 +71,7 @@ services:
     environment:
       CELERY_BROKER_URL: redis://172.16.238.10:6379/2
       ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
-      MIDDLEWARE_BASE_URL: http://starfish-middleware-3:8092
+      MIDDLEWARE_BASE_URL: http://127.0.0.1:8092
       REDIS_URL: redis://172.16.238.10:6379/2
       BLOCK_CONFIRMATIONS: "50"
     depends_on:
@@ -91,7 +91,7 @@ services:
     volumes:
       - ../starfish/listrack/artifacts/contracts/LISTRACK_ETH.sol/LISTRACK_ETH.json:/app/artifacts/contracts/LISTRACK_ETH.json
     environment:
-      CONNECTOR_EVM_API_BASE_URL: http://starfish-evm-connector-1:8080
+      CONNECTOR_EVM_API_BASE_URL: http://172.16.238.21:8080
       FIREFLY_API_HOST: "127.0.0.1"
       FIREFLY_API_PORT: 8000
       FIREFLY_API_SCHEME: "http"
@@ -99,7 +99,7 @@ services:
       LISTRACK_CONTRACT_JSON_PATH: "/app/artifacts/contracts/LISTRACK_ETH.json"
       REDIS_URL: redis://172.16.238.10:6379/0
       MIDDLEWARE_CALLBACK_PORT: 8090
-      MIDDLEWARE_CALLBACK_URL: http://starfish-middleware-1:8090
+      MIDDLEWARE_CALLBACK_URL: http://127.0.0.1:8090
     depends_on:
       redis:
         condition: service_healthy
@@ -113,7 +113,7 @@ services:
     volumes:
       - ../starfish/listrack/artifacts/contracts/LISTRACK_ETH.sol/LISTRACK_ETH.json:/app/artifacts/contracts/LISTRACK_ETH.json
     environment:
-      CONNECTOR_EVM_API_BASE_URL: http://starfish-evm-connector-2:8081
+      CONNECTOR_EVM_API_BASE_URL: http://172.16.238.61:8081
       FIREFLY_API_HOST: "127.0.0.1"
       FIREFLY_API_PORT: 8001
       FIREFLY_API_SCHEME: "http"
@@ -121,7 +121,7 @@ services:
       LISTRACK_CONTRACT_JSON_PATH: "/app/artifacts/contracts/LISTRACK_ETH.json"
       REDIS_URL: redis://172.16.238.10:6379/1
       MIDDLEWARE_CALLBACK_PORT: 8091
-      MIDDLEWARE_CALLBACK_URL: http://starfish-middleware-2:8091
+      MIDDLEWARE_CALLBACK_URL: http://127.0.0.1:8091
     depends_on:
       redis:
         condition: service_healthy
@@ -135,7 +135,7 @@ services:
     volumes:
       - ../starfish/listrack/artifacts/contracts/LISTRACK_ETH.sol/LISTRACK_ETH.json:/app/artifacts/contracts/LISTRACK_ETH.json
     environment:
-      CONNECTOR_EVM_API_BASE_URL: http://starfish-evm-connector-3:8082
+      CONNECTOR_EVM_API_BASE_URL: http://172.16.238.71:8082
       FIREFLY_API_HOST: "127.0.0.1"
       FIREFLY_API_PORT: 8002
       FIREFLY_API_SCHEME: "http"
@@ -143,7 +143,7 @@ services:
       LISTRACK_CONTRACT_JSON_PATH: "/app/artifacts/contracts/LISTRACK_ETH.json"
       REDIS_URL: redis://172.16.238.10:6379/2
       MIDDLEWARE_CALLBACK_PORT: 8092
-      MIDDLEWARE_CALLBACK_URL: http://starfish-middleware-3:8092/callback/evm
+      MIDDLEWARE_CALLBACK_URL: http://127.0.0.1:8092
     depends_on:
       redis:
         condition: service_healthy

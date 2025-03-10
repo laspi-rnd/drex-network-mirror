@@ -14,5 +14,6 @@ fi
 
 docker compose -f network/docker-compose-mainnet.yaml up -d
 sleep 15
-#source scripts/setup_starfish.sh
-#docker compose -f network/starfish.yaml up -d
+source scripts/setup_starfish.sh
+sleep 10
+docker compose -f network/starfish.yaml up -d
