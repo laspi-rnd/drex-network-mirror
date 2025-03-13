@@ -11,3 +11,6 @@ npx hardhat compile
 cd ../middleware
 docker build -t starfish-middleware .
 cd ../../
+
+sleep 10
+docker compose -f network/starfish.yaml up -d
