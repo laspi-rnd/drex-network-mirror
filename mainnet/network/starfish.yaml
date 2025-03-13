@@ -10,7 +10,6 @@ services:
     restart: unless-stopped
     networks:
       main_network:
-        ipv4_address: 172.16.238.10
 
   #starfish-firefly:
   #  image: alpine:latest
@@ -20,6 +19,59 @@ services:
   #      ipv4_address: 172.16.238.11
   #  entrypoint: /bin/sh -c "apk update && apk add --no-cache wget tar docker openssl bash && wget https://github.com/hyperledger/firefly-cli/releases/download/v1.3.2/firefly-cli_1.3.2_Linux_x86_64.tar.gz && tar -zxf firefly-cli_*.tar.gz -C /usr/local/bin ff && rm firefly-cli_*.tar.gz && ff init starfish-firefly 3 -p 8000 -v -n besu --chain-id 381660001 --remote-node-url http://172.16.238.2:8545 --remote-node-deploy --connector-config starfish/listrack/evmconnect.yaml && ff start starfish-firefly"
 
+  # conector 1
+  celery-beat-1:
+    build: .
+    image: starfish-evm-connector
+    container_name: starfish-evm-connector-1-celery-beat
+    environment:
+      CELERY_BROKER_URL: redis://84.247.184.185:6379/0
+      ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
+      MIDDLEWARE_BASE_URL: http://84.247.184.185:8090
+      REDIS_URL: redis://84.247.184.185:6379/0
+    command:
+      [
+        "uv",
+        "run",
+        "celery",
+        "-A",
+        "app.tasks:celery",
+        "beat",
+        "--loglevel=info",
+      ]
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      main_network:
+
+  celery-worker-1:
+    build: .
+    image: starfish-evm-connector
+    container_name: starfish-evm-connector-1-celery-worker
+    environment:
+      CELERY_BROKER_URL: redis://84.247.184.185:6379/0
+      ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
+      MIDDLEWARE_BASE_URL: http://84.247.184.185:8090
+      REDIS_URL: redis://84.247.184.185:6379/0
+    command:
+      [
+        "uv",
+        "run",
+        "celery",
+        "-A",
+        "app.tasks:celery",
+        "worker",
+        "--loglevel=info",
+      ]
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      main_network:
+
   starfish-evm-connector-1:
     build: .
     image: starfish-evm-connector
@@ -27,10 +79,10 @@ services:
     ports:
       - "8080:80"
     environment:
-      CELERY_BROKER_URL: redis://172.16.238.10:6379/0
+      CELERY_BROKER_URL: redis://84.247.184.185:6379/0
       ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
-      MIDDLEWARE_BASE_URL: http://127.0.0.1:8090
-      REDIS_URL: redis://172.16.238.10:6379/0
+      MIDDLEWARE_BASE_URL: http://84.247.184.185:8090
+      REDIS_URL: redis://84.247.184.185:6379/0
       BLOCK_CONFIRMATIONS: "50"
     depends_on:
       redis:
@@ -39,7 +91,61 @@ services:
         condition: service_started
     networks:
       main_network:
-        ipv4_address: 172.16.238.21
+    restart: unless-stopped
+
+
+  # conector 2
+  celery-beat-2:
+    build: .
+    image: starfish-evm-connector
+    container_name: starfish-evm-connector-2-celery-beat
+    environment:
+      CELERY_BROKER_URL: redis://84.247.184.185:6379/1
+      ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
+      MIDDLEWARE_BASE_URL: http://84.247.184.185:8091
+      REDIS_URL: redis://84.247.184.185:6379/1
+    command:
+      [
+        "uv",
+        "run",
+        "celery",
+        "-A",
+        "app.tasks:celery",
+        "beat",
+        "--loglevel=info",
+      ]
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      main_network:
+
+  celery-worker-2:
+    build: .
+    image: starfish-evm-connector
+    container_name: starfish-evm-connector-2-celery-worker
+    environment:
+      CELERY_BROKER_URL: redis://84.247.184.185:6379/1
+      ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
+      MIDDLEWARE_BASE_URL: http://84.247.184.185:8091
+      REDIS_URL: redis://84.247.184.185:6379/1
+    command:
+      [
+        "uv",
+        "run",
+        "celery",
+        "-A",
+        "app.tasks:celery",
+        "worker",
+        "--loglevel=info",
+      ]
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      main_network:
 
   starfish-evm-connector-2:
     build: .
@@ -48,10 +154,10 @@ services:
     ports:
       - "8081:80"
     environment:
-      CELERY_BROKER_URL: redis://172.16.238.10:6379/1
+      CELERY_BROKER_URL: redis://84.247.184.185:6379/1
       ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
-      MIDDLEWARE_BASE_URL: http://127.0.0.1:8091
-      REDIS_URL: redis://172.16.238.10:6379/1
+      MIDDLEWARE_BASE_URL: http://84.247.184.185:8091
+      REDIS_URL: redis://84.247.184.185:6379/1
       BLOCK_CONFIRMATIONS: "50"
     depends_on:
       redis:
@@ -60,7 +166,61 @@ services:
         condition: service_started
     networks:
       main_network:
-        ipv4_address: 172.16.238.61
+    restart: unless-stopped
+
+
+# conector 3
+  celery-beat-3:
+    build: .
+    image: starfish-evm-connector
+    container_name: starfish-evm-connector-3-celery-beat
+    environment:
+      CELERY_BROKER_URL: redis://84.247.184.185:6379/2
+      ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
+      MIDDLEWARE_BASE_URL: http://84.247.184.185:8092
+      REDIS_URL: redis://84.247.184.185:6379/2
+    command:
+      [
+        "uv",
+        "run",
+        "celery",
+        "-A",
+        "app.tasks:celery",
+        "beat",
+        "--loglevel=info",
+      ]
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      main_network:
+
+  celery-worker-3:
+    build: .
+    image: starfish-evm-connector
+    container_name: starfish-evm-connector-3-celery-worker
+    environment:
+      CELERY_BROKER_URL: redis://84.247.184.185:6379/2
+      ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
+      MIDDLEWARE_BASE_URL: http://84.247.184.185:8092
+      REDIS_URL: redis://84.247.184.185:6379/2
+    command:
+      [
+        "uv",
+        "run",
+        "celery",
+        "-A",
+        "app.tasks:celery",
+        "worker",
+        "--loglevel=info",
+      ]
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      main_network:
 
   starfish-evm-connector-3:
     build: .
@@ -69,10 +229,10 @@ services:
     ports:
       - "8082:80"
     environment:
-      CELERY_BROKER_URL: redis://172.16.238.10:6379/2
+      CELERY_BROKER_URL: redis://84.247.184.185:6379/2
       ETH_NODE_URL: "https://rpc-evm-sidechain.xrpl.org"
-      MIDDLEWARE_BASE_URL: http://127.0.0.1:8092
-      REDIS_URL: redis://172.16.238.10:6379/2
+      MIDDLEWARE_BASE_URL: http://84.247.184.185:8092
+      REDIS_URL: redis://84.247.184.185:6379/2
       BLOCK_CONFIRMATIONS: "50"
     depends_on:
       redis:
@@ -81,73 +241,81 @@ services:
         condition: service_started
     networks:
       main_network:
-        ipv4_address: 172.16.238.71
+    restart: unless-stopped
+
+# middlewares 
 
   starfish-middleware-1:
     build: .
     image: starfish-middleware
     container_name: starfish-middleware-1
-    network_mode: host
     volumes:
       - ../starfish/listrack/artifacts/contracts/LISTRACK_ETH.sol/LISTRACK_ETH.json:/app/artifacts/contracts/LISTRACK_ETH.json
     environment:
-      CONNECTOR_EVM_API_BASE_URL: http://172.16.238.21:8080
-      FIREFLY_API_HOST: "127.0.0.1"
+      CONNECTOR_EVM_API_BASE_URL: http://84.247.184.185:8080
+      FIREFLY_API_HOST: "84.247.184.185"
       FIREFLY_API_PORT: 8000
       FIREFLY_API_SCHEME: "http"
       LISTRACK_CONTRACT_API_NAME: "listrack-eth"
       LISTRACK_CONTRACT_JSON_PATH: "/app/artifacts/contracts/LISTRACK_ETH.json"
-      REDIS_URL: redis://172.16.238.10:6379/0
+      REDIS_URL: redis://84.247.184.185:6379/0
       MIDDLEWARE_CALLBACK_PORT: 8090
-      MIDDLEWARE_CALLBACK_URL: http://127.0.0.1:8090
+      MIDDLEWARE_CALLBACK_URL: http://84.247.184.185:8090
+    networks:
+      main_network:
     depends_on:
       redis:
         condition: service_healthy
     command: ["sh", "-c", "./main.sh"]
+    restart: unless-stopped
 
   starfish-middleware-2:
     build: .
     image: starfish-middleware
     container_name: starfish-middleware-2
-    network_mode: host
     volumes:
       - ../starfish/listrack/artifacts/contracts/LISTRACK_ETH.sol/LISTRACK_ETH.json:/app/artifacts/contracts/LISTRACK_ETH.json
     environment:
-      CONNECTOR_EVM_API_BASE_URL: http://172.16.238.61:8081
-      FIREFLY_API_HOST: "127.0.0.1"
+      CONNECTOR_EVM_API_BASE_URL: http://84.247.184.185:8081
+      FIREFLY_API_HOST: "84.247.184.185"
       FIREFLY_API_PORT: 8001
       FIREFLY_API_SCHEME: "http"
       LISTRACK_CONTRACT_API_NAME: "listrack-eth"
       LISTRACK_CONTRACT_JSON_PATH: "/app/artifacts/contracts/LISTRACK_ETH.json"
-      REDIS_URL: redis://172.16.238.10:6379/1
+      REDIS_URL: redis://84.247.184.185:6379/1
       MIDDLEWARE_CALLBACK_PORT: 8091
-      MIDDLEWARE_CALLBACK_URL: http://127.0.0.1:8091
+      MIDDLEWARE_CALLBACK_URL: http://84.247.184.185:8091
+    networks:
+      main_network:
     depends_on:
       redis:
         condition: service_healthy
     command: ["sh", "-c", "./main.sh"]
+    restart: unless-stopped
 
   starfish-middleware-3:
     build: .
     image: starfish-middleware
     container_name: starfish-middleware-3
-    network_mode: host
     volumes:
       - ../starfish/listrack/artifacts/contracts/LISTRACK_ETH.sol/LISTRACK_ETH.json:/app/artifacts/contracts/LISTRACK_ETH.json
     environment:
-      CONNECTOR_EVM_API_BASE_URL: http://172.16.238.71:8082
-      FIREFLY_API_HOST: "127.0.0.1"
+      CONNECTOR_EVM_API_BASE_URL: http://84.247.184.185:8082
+      FIREFLY_API_HOST: "84.247.184.185"
       FIREFLY_API_PORT: 8002
       FIREFLY_API_SCHEME: "http"
       LISTRACK_CONTRACT_API_NAME: "listrack-eth"
       LISTRACK_CONTRACT_JSON_PATH: "/app/artifacts/contracts/LISTRACK_ETH.json"
-      REDIS_URL: redis://172.16.238.10:6379/2
+      REDIS_URL: redis://84.247.184.185:6379/2
       MIDDLEWARE_CALLBACK_PORT: 8092
-      MIDDLEWARE_CALLBACK_URL: http://127.0.0.1:8092
+      MIDDLEWARE_CALLBACK_URL: http://84.247.184.185:8092
+    networks:
+      main_network:
     depends_on:
       redis:
         condition: service_healthy
     command: ["sh", "-c", "./main.sh"]
+    restart: unless-stopped
 
 networks:
   main_network:
