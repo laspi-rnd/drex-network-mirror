@@ -12,9 +12,7 @@ To run the test environment, follow these steps:
 
 ```bash
 git clone https://gitlab.laspi.ufrj.br/laspi-rnd/bacen-interoperabilidade/testenv.git
-git submodule update --init --recursive
 npm install --save-dev hardhat
-wget https://github.com/hyperledger/firefly-cli/releases/download/<installer> && sudo tar -zxf firefly-cli_*.tar.gz -C /usr/local/bin ff && rm firefly-cli_*.tar.gz
 ```
 
 2. Initialize the test environment:
@@ -23,7 +21,7 @@ wget https://github.com/hyperledger/firefly-cli/releases/download/<installer> &&
 ./run_env.sh
 ```
 
-The `run_env.sh` script will create all the necessary containers for running the test environment. If this is the first run or after resetting the test environment, it's necessary to configure [permissioning in the test environment](#configuring-permissioning-in-the-test-environment).
+The `run_env.sh` script will create all the necessary containers for running the test environment.
 
 It’s possible to specify which services will run in the test environment. To do so, pass -l (for Prometheus and Grafana) or -a (for Aliennet) to the `run_env` script.
 
@@ -47,25 +45,7 @@ The `stop_env.sh` script will stop all containers created by the `run_env.sh` sc
 ./stop_env.sh -r
 ```
 
-## Configuring Permissioning in the Test Environment
-<a name="permissioning"></a>
-This step should only be performed during the first execution of the test environment or after a reset. To configure permissioning in the test environment, run the following command:
-
-```bash
-cd permissioning-smart-contracts
-npm install --force
-npm install -g truffle
-truffle migrate --reset --network besu
-```
-
-Save the permissioning contract deployment addresses, as they will be needed to modify the test network structure.
-
-# Adding wallets, nodes, or administrators:
-
-In the `examples` folder, there are examples of how to add wallets, nodes, or administrators.
-
 # TO DO
-   - Migrate from Truffle to Hardhat
    - RPC credentials
    - create a docker compose for "DREX supernode"
    - create a docker compose for "BACEN infrastructure"

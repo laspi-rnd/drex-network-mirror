@@ -50,10 +50,10 @@ metrics-host="0.0.0.0"
 metrics-port=9545
 
 # Permissioning (utilizar esses paramêtros para habilitar a permissão)
-permissions-nodes-contract-enabled=true
-permissions-nodes-contract-address="0x29394E2003E318A47F80E6541390d7c3902ae396"
-permissions-nodes-contract-version=2
-permissions-accounts-contract-enabled=true
-permissions-accounts-contract-address="0x20E07f7fB25521Ee8b68E99A99Ed0D8f7b3FFB37"
+#permissions-nodes-contract-enabled=true
+#permissions-nodes-contract-address="0x29394E2003E318A47F80E6541390d7c3902ae396"
+#permissions-nodes-contract-version=2
+#permissions-accounts-contract-enabled=true
+#permissions-accounts-contract-address="0x20E07f7fB25521Ee8b68E99A99Ed0D8f7b3FFB37"
 
 privacy-marker-transaction-signing-key-file="/opt/besu/data/key"

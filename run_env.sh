@@ -5,7 +5,7 @@ cd mainnet
 source scripts/setup_main.sh
 cd ..
 
-while getopts 'alsh' opt; do
+while getopts 'alh' opt; do
   case "$opt" in
     a)
       echo "Setting up alien network"
@@ -17,13 +17,6 @@ while getopts 'alsh' opt; do
     l)
       echo "Running Prometheus and Grafana"
       docker compose -f logs/docker-compose-dashboard.yaml up -d
-      ;;
-
-    s)
-      echo "Starting Starfish"
-      cd mainnet
-      source scripts/setup_starfish.sh 
-      cd ..
       ;;
    
     ?|h)
