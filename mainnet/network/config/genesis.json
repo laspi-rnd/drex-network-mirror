@@ -2,7 +2,7 @@
     "config": {
         "chainId": 381660001,
         "muirglacierblock": 0,
-        "londonBlock": 2592800,
+        "londonBlock": 0,
         "zeroBaseFee": true,
         "qbft": {
             "blockperiodseconds": 5,
