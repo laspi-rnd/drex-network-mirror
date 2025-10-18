@@ -1,6 +1,6 @@
 services:
   validator-main-1:
-    image: hyperledger/besu:24.5.2-amd64
+    image: hyperledger/besu:latest-amd64
     container_name: validator-main-1
     user: root
     volumes:
@@ -17,10 +17,10 @@ services:
       - "9547:9545"   # METRICS
     networks:
       main_network:
-        ipv4_address: 172.16.238.2
+        ipv4_address: 172.16.238.92
     restart: always
   validator-main-2:
-    image: hyperledger/besu:24.5.2-amd64
+    image: hyperledger/besu:latest-amd64
     container_name: validator-main-2
     user: root
     volumes:
@@ -37,10 +37,10 @@ services:
       - "9548:9545"   # METRICS
     networks:
       main_network:
-        ipv4_address: 172.16.238.3
+        ipv4_address: 172.16.238.93
     restart: always
   validator-main-3:
-    image: hyperledger/besu:24.5.2-amd64
+    image: hyperledger/besu:latest-amd64
     container_name: validator-main-3
     user: root
     volumes:
@@ -57,10 +57,10 @@ services:
       - "9549:9545"   # METRICS
     networks:
       main_network:
-        ipv4_address: 172.16.238.4
+        ipv4_address: 172.16.238.94
     restart: always
   validator-main-4:
-    image: hyperledger/besu:24.5.2-amd64
+    image: hyperledger/besu:latest-amd64
     container_name: validator-main-4
     user: root
     volumes:
@@ -80,7 +80,7 @@ services:
         ipv4_address: 172.16.238.5
     restart: always
   fullnode-participantA-1:
-    image: hyperledger/besu:24.5.2-amd64
+    image: hyperledger/besu:latest-amd64
     container_name: fullnode-participantA-1
     user: root
     volumes:
@@ -100,7 +100,7 @@ services:
         ipv4_address: 172.16.238.6
     restart: always
   fullnode-participantB-1:
-    image: hyperledger/besu:24.5.2-amd64
+    image: hyperledger/besu:latest-amd64
     container_name: fullnode-participantB-1
     user: root
     volumes:
@@ -120,7 +120,7 @@ services:
         ipv4_address: 172.16.238.7
     restart: always
   fullnode-main-1:
-    image: hyperledger/besu:24.5.2-amd64
+    image: hyperledger/besu:latest-amd64
     container_name: fullnode-main-1
     user: root
     volumes:
@@ -137,10 +137,10 @@ services:
       - "9553:9545"   # METRICS
     networks:
       main_network:
-        ipv4_address: 172.16.238.8
+        ipv4_address: 172.16.238.98
     restart: always
   fullnode-main-2:
-    image: hyperledger/besu:24.5.2-amd64
+    image: hyperledger/besu:latest-amd64
     container_name: fullnode-main-2
     user: root
     volumes:

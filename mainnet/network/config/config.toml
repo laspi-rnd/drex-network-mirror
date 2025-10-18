@@ -21,7 +21,7 @@ nat-method="NONE"
 min-gas-price=0
 
 # Transaction Pool
-tx-pool="sequenced"   
+tx-pool="legacy"   
 tx-pool-retention-hours=1   
 tx-pool-limit-by-account-percentage=1   
 tx-pool-max-size=2500
@@ -56,4 +56,4 @@ metrics-port=9545
 #permissions-accounts-contract-enabled=true
 #permissions-accounts-contract-address="0x20E07f7fB25521Ee8b68E99A99Ed0D8f7b3FFB37"
 
-privacy-marker-transaction-signing-key-file="/opt/besu/data/key"
+#privacy-marker-transaction-signing-key-file="/opt/besu/data/key"
